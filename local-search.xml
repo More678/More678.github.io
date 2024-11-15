@@ -3,5 +3,39 @@
   
   
   
+  <entry>
+    <title>post</title>
+    <link href="/2024/11/15/post/"/>
+    <url>/2024/11/15/post/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>2024 YLCTF</title>
+    <link href="/2024/11/01/2024-YLCTF/"/>
+    <url>/2024/11/01/2024-YLCTF/</url>
+    
+    <content type="html"><![CDATA[<h3 id="Round-1"><a href="#Round-1" class="headerlink" title="Round 1"></a>Round 1</h3><h4 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h4><h5 id="签到-打卡小能手"><a href="#签到-打卡小能手" class="headerlink" title="[签到] 打卡小能手"></a>[签到] 打卡小能手</h5><p>没什么说的</p><p>YLCTF{W3lc0m3_T0_Yuan1ooCtf}</p><h5 id="Round-1-hide-png"><a href="#Round-1-hide-png" class="headerlink" title="[Round 1] hide_png"></a>[Round 1] hide_png</h5><p>眼睛看瞎了</p><p><img src="C:\Users\YY\Desktop\writeupDemo\image-20241010130322341.png" alt="image-20241010130322341"></p><p><img src="C:\Users\YY\Desktop\writeupDemo\image-20241010130243649.png" alt="image-20241010130243649"></p><p>YLCTF{a27f2d1a-9176-42cf-a2b6-1c87b17b98dc}</p><h5 id="Round-1-pngorzip"><a href="#Round-1-pngorzip" class="headerlink" title="[Round 1] pngorzip"></a>[Round 1] pngorzip</h5><p>stegsolve lsb分离出zip，删除后面的无用内容，提示114514????</p><p>直接ARCHPR掩码爆破出114514giao</p><p><img src="/image-20241010130549709.png" alt="image-20241010130549709"></p><p>YLCTF{d359d6e4-740a-49cf-83eb-5b0308f09c8c}</p><h5 id="Round-1-plain-crack"><a href="#Round-1-plain-crack" class="headerlink" title="[Round 1] plain_crack"></a>[Round 1] plain_crack</h5><p>一眼丁真 明文攻击</p><p>压缩build.py，直接ARCHPR解一下，然后解出docx，改后缀为.zip在里面找到flag图片</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding:utf8 -*-</span><br><br><span class="hljs-keyword">import</span> pyminizip<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">create</span>(<span class="hljs-params">files, zfile</span>):<br>    pyminizip.compress_multiple(files,[], zfile,<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">pass</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    files = [<span class="hljs-string">&#x27;build.py&#x27;</span>]<br>    zfile = <span class="hljs-string">&#x27;crack2.zip&#x27;</span><br>    create(files, zfile)<br></code></pre></td></tr></table></figure><p><img src="/image-20241010131438267.png" alt="image-20241010131438267"></p><p><img src="/image-20241010131456743.png" alt="image-20241010131456743"></p><p><img src="/image-20241010130916284.png" alt="image-20241010130916284"></p><h5 id="Round-1-trafficdet"><a href="#Round-1-trafficdet" class="headerlink" title="[Round 1] trafficdet"></a>[Round 1] trafficdet</h5><p>sklearn随机森林直接出，一开始以为要练模型折腾半天，诶，没血</p><p>训练集0.9 验证集0.1</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier<br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score<br><br>train_data = pd.read_csv(<span class="hljs-string">&#x27;train.csv&#x27;</span>)<br>train_data = train_data.dropna()<br><br>X = train_data.drop(columns=[<span class="hljs-string">&#x27;Label&#x27;</span>])<br>y = train_data[<span class="hljs-string">&#x27;Label&#x27;</span>]<br>X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=<span class="hljs-number">0.1</span>, random_state=<span class="hljs-number">42</span>)<br><br>model = RandomForestClassifier(n_estimators=<span class="hljs-number">100</span>, random_state=<span class="hljs-number">42</span>)<br>model.fit(X_train, y_train)<br>y_pred = model.predict(X_val)<br><br><span class="hljs-built_in">print</span>(accuracy_score(y_val, y_pred))<br><br>test_data = pd.read_csv(<span class="hljs-string">&#x27;test.csv&#x27;</span>)<br>X_test = test_data<br>test_preds = model.predict(X_test)<br><br>result = pd.DataFrame(&#123;<br>    <span class="hljs-string">&#x27;Label&#x27;</span>: test_preds<br>&#125;)<br>result.index=result.index+<span class="hljs-number">1</span><br>result.to_csv(<span class="hljs-string">&#x27;result.csv&#x27;</span>)<br></code></pre></td></tr></table></figure><h5 id="Round-1-whatmusic"><a href="#Round-1-whatmusic" class="headerlink" title="[Round 1] whatmusic"></a>[Round 1] whatmusic</h5><p>png逆序，修复宽高，翻转</p><p>lyra解音频，在线网站听一下，听不了一点</p><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">f=<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;password&quot;</span>,<span class="hljs-string">&quot;rb+&quot;</span>)<span class="hljs-selector-class">.read</span>()<br>f2=<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;password.png&quot;</span>,<span class="hljs-string">&quot;wb+&quot;</span>)<span class="hljs-selector-class">.write</span>(f<span class="hljs-selector-attr">[::-1]</span>)<br></code></pre></td></tr></table></figure><p><img src="/image-20241011203712841.png" alt="image-20241011203712841"></p><p><img src="/image-20241011213855014.png" alt="image-20241011213855014"></p><p><img src="/image-20241011203751254.png" alt="image-20241011203751254"></p><p>YLCTF{YLYRM6S5ICG00ODLL0VE}</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>CTF</tag>
+      
+      <tag>Misc</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
   
 </search>
