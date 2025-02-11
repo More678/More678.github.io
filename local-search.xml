@@ -4,6 +4,46 @@
   
   
   <entry>
+    <title>Hgame 2025 Week1 Misc</title>
+    <link href="/2025/02/11/Hgame%202025%20Week1%20Misc/"/>
+    <url>/2025/02/11/Hgame%202025%20Week1%20Misc/</url>
+    
+    <content type="html"><![CDATA[<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="Hakuya-Want-A-Girl-Friend"><a href="#Hakuya-Want-A-Girl-Friend" class="headerlink" title="Hakuya Want A Girl Friend"></a>Hakuya Want A Girl Friend</h3><p>下载附件给了一个十六进制，010贴进去发现是zip文件头，后面跟了一个逆序的png，正过来修复宽高得到压缩包密码，解压得到flag</p><p><img src="../../../../img/archives/Hgame2025W1/image-20250204215442674.png" alt="image-20250204215442674"></p><p><img src="../../../../img/archives/Hgame2025W1/image-20250204215408776.png" alt="image-20250204215408776"></p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs py">f=<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;无标1.zip&quot;</span>,<span class="hljs-string">&quot;rb&quot;</span>).read()<br><span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;222.png&quot;</span>,<span class="hljs-string">&quot;wb&quot;</span>).write(f[::-<span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure><p><img src="../../../../img/archives/Hgame2025W1/fix_222.png" alt="fix_222"></p><p><img src="../../../../img/archives/Hgame2025W1/image-20250204215950085.png" alt="image-20250204215950085"></p><p>hgame{h4kyu4_w4nt_gir1f3nd_+q_931290928}</p><h3 id="Computer-cleaner"><a href="#Computer-cleaner" class="headerlink" title="Computer cleaner"></a>Computer cleaner</h3><p>取证大师看历史命令，发现打开了shell.php、upload_log.txt、flag_part3，直接进机子find找到两段flag，根据提示朔源访问upload_log.txt中的访问ip得到中间的flag</p><p><img src="../../../../img/archives/Hgame2025W1/image-20250205164411601.png" alt="image-20250205164411601"></p><p><img src="../../../../img/archives/Hgame2025W1/image-20250205164504313.png" alt="image-20250205164504313"></p><p><img src="../../../../img/archives/Hgame2025W1/image-20250205164430309.png" alt="image-20250205164430309"></p><h3 id="Level-314-线性走廊中的双生实体"><a href="#Level-314-线性走廊中的双生实体" class="headerlink" title="Level 314 线性走廊中的双生实体"></a>Level 314 线性走廊中的双生实体</h3><p>看源码一把梭</p><p><img src="../../../../img/archives/Hgame2025W1/image-20250208051125520.png" alt="image-20250208051125520"></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch;<span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;</span>.join([<span class="hljs-built_in">chr</span>(b ^ <span class="hljs-number">85</span>) <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> torch.jit.load(<span class="hljs-string">&#x27;entity.pt.zip&#x27;</span>).security.flag]))<br></code></pre></td></tr></table></figure><p>flag{s0_th1s_1s_r3al_s3cr3t}</p><h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Level-24-Pacman"><a href="#Level-24-Pacman" class="headerlink" title="Level 24 Pacman"></a>Level 24 Pacman</h3><p><img src="../../../../img/archives/Hgame2025W1/image-20250204221403570.png" alt="image-20250204221403570"></p><p><img src="../../../../img/archives/Hgame2025W1/image-20250204215559787.png" alt="image-20250204215559787"></p><p><img src="../../../../img/archives/Hgame2025W1/image-20250204215454958.png" alt="image-20250204215454958"></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>CTF</tag>
+      
+      <tag>Misc</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Ubuntu22.04 curl 8.11.1编译安装</title>
+    <link href="/2025/02/08/Ubuntu%2022.04%20curl%208.11.1%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/"/>
+    <url>/2025/02/08/Ubuntu%2022.04%20curl%208.11.1%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85/</url>
+    
+    <content type="html"><![CDATA[<p>为了解决OneDrive调用curl时莫名的问题导致占用两倍的网盘空间的问题，重新编译安装了curl 8.11.1</p><p>参考：</p><p><a href="https://blog.csdn.net/estelle_belle/article/details/111181037">解决报错libssl.so.1.1: cannot open shared object file: No such file or directory-CSDN博客</a></p><p><a href="https://blog.csdn.net/haohaohaihuai/article/details/103968381">libcurl交叉编译支持https_怎么看libcurl带不带ssl库-CSDN博客</a></p><p><a href="https://github.com/curl/curl/discussions/14726">configure: error: libpsl libs and&#x2F;or directories were not found where specified! · curl&#x2F;curl · Discussion #14726 (github.com)</a></p><p><a href="https://blog.csdn.net/Tracytang97/article/details/129876927">linux编译curl（带openssl）_configure: error: –with-openssl was given but ope-CSDN博客</a></p><p>下载curl openssl到&#x2F;usr&#x2F;local&#x2F;src目录</p><p>注意：openssl1.1.1d已经不再维护，同时也可能造成onedrive其他问题（未测试），openssl最新版本在curl 8.11.1编译时会出现问题，原因未知</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">tar -zxvf curl-8.11.1.tar.gz<br>tar -zxvf openssl-1.1.1d.tar.gz<br>cd openssl-1.1.1d/<br>./config --prefix=/usr/local/src/openssl-1.1.1d/build<br>sudo make &amp;&amp; make install<br>./configure --prefix=/usr/local/src/curl-8.11.1/build --with-openssl=/usr/local/src/openssl-1.1.1d/build --without-libpsl<br>sudo make &amp;&amp; make install<br>cd /usr/lib/x86_64-linux-gnu/<br>mv libcurl-gnutls.so.4.7.0 libcurl-gnutls.so.4.7.0.bak<br>mv libcurl.so.4.8.0 libcurl.so.4.7.0<br>mv curl curl_7.81.0.bak<br>ln -s /usr/local/src/openssl-1.1.1d/build .<br>mv /usr/bin/openssl /usr/bin/openssl.old<br>mv /usr/lib/openssl /usr/lib/openssl.old<br>ln -s /usr/local/src/openssl-1.1.1d/build/bin/openssl /usr/bin/openssl<br>ln -s /usr/local/src/openssl-1.1.1d/build/include/openssl /usr/include/openssl<br>echo &quot;/usr/local/src/openssl-1.1.1d/build/lib&quot; &gt;&gt; /etc/ld.so.conf<br></code></pre></td></tr></table></figure><p>注意：2.5.3版本后的OneDrive安装后会自动注册用户登录时进行同步的服务，不需要的话建议删除或备份</p><p>注意：reboot后检查软连接是否被重新修改</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mv /usr/lib/systemd/user/onedrive.service /usr/lib/systemd/user/onedrive.service.bak<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>环境安装</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>旧版先知社区爬虫</title>
     <link href="/2025/02/05/%E6%97%A7%E7%89%88%E5%85%88%E7%9F%A5%E7%A4%BE%E5%8C%BA%E7%88%AC%E8%99%AB/"/>
     <url>/2025/02/05/%E6%97%A7%E7%89%88%E5%85%88%E7%9F%A5%E7%A4%BE%E5%8C%BA%E7%88%AC%E8%99%AB/</url>
