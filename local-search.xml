@@ -69,6 +69,25 @@
   
   
   <entry>
+    <title>wsl install cuda 12.2 [2025/03/12]</title>
+    <link href="/2025/06/30/wsl%20%E5%AE%89%E8%A3%85cuda%2012.2/"/>
+    <url>/2025/06/30/wsl%20%E5%AE%89%E8%A3%85cuda%2012.2/</url>
+    
+    <content type="html"><![CDATA[<p>参考<a href="https://www.cnblogs.com/rthete/p/17551419.html">WSL2安装CUDA踩坑Debug全记录</a></p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">wget</span> https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin<br><span class="hljs-attribute">sudo</span> mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-<span class="hljs-number">600</span><br><span class="hljs-attribute">wget</span> https://developer.download.nvidia.com/compute/cuda/<span class="hljs-number">12</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span>/local_installers/cuda-repo-ubuntu2204-<span class="hljs-number">12</span>-<span class="hljs-number">2</span>-local_12.<span class="hljs-number">2</span>.<span class="hljs-number">0</span>-<span class="hljs-number">535</span>.<span class="hljs-number">54</span>.<span class="hljs-number">03</span>-<span class="hljs-number">1</span>_amd64.deb<br><span class="hljs-attribute">sudo</span> dpkg -i cuda-repo-ubuntu2204-<span class="hljs-number">12</span>-<span class="hljs-number">2</span>-local_12.<span class="hljs-number">2</span>.<span class="hljs-number">0</span>-<span class="hljs-number">535</span>.<span class="hljs-number">54</span>.<span class="hljs-number">03</span>-<span class="hljs-number">1</span>_amd64.deb<br><span class="hljs-attribute">sudo</span> cp /var/cuda-repo-ubuntu2204-<span class="hljs-number">12</span>-<span class="hljs-number">2</span>-local/cuda-*-keyring.gpg /usr/share/keyrings/<br><span class="hljs-attribute">sudo</span> apt-get update<br><span class="hljs-attribute">sudo</span> apt-get -y install cuda<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>环境安装</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>QHCTF 2025 取证</title>
     <link href="/2025/02/19/QHCTF2025F/"/>
     <url>/2025/02/19/QHCTF2025F/</url>
