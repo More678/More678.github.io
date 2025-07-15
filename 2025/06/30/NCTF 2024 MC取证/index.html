@@ -1,0 +1,762 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="../../../../img/icon.png">
+  <link rel="icon" href="../../../../img/icon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tenstrings">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="这次是一道Minecraft内存取证题目，先简单用R-Stdio看了一下，发现是在Linux上装的mcsm面板，使用Vol分析banner去制作符号表  12345678910C:\Users\YY&gt;D:\Software\LovelyMem\Tools\python3\python.exe D:\Software\LovelyMem\Tools\volatility3\vol.py -f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NCTF 2024 Minecraft内存取证 [2025&#x2F;03&#x2F;25]">
+<meta property="og:url" content="https://more678.github.io/2025/06/30/NCTF%202024%20MC%E5%8F%96%E8%AF%81/index.html">
+<meta property="og:site_name" content="tenstrings&#39;s blog">
+<meta property="og:description" content="这次是一道Minecraft内存取证题目，先简单用R-Stdio看了一下，发现是在Linux上装的mcsm面板，使用Vol分析banner去制作符号表  12345678910C:\Users\YY&gt;D:\Software\LovelyMem\Tools\python3\python.exe D:\Software\LovelyMem\Tools\volatility3\vol.py -f">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250322181447577.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250323042423481.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250323042438811.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250323110531511.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250323111032841.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250323111944203.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250323111452641.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250323044726666.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250323111802977.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250323112859702.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250323113033934.png">
+<meta property="article:published_time" content="2025-06-30T14:25:12.000Z">
+<meta property="article:modified_time" content="2025-07-15T06:51:45.110Z">
+<meta property="article:author" content="tenstrings">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Misc">
+<meta property="article:tag" content="内存取证">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://more678.github.io/img/archives/NCTF2024/image-20250322181447577.png">
+  
+  
+  
+  <title>NCTF 2024 Minecraft内存取证 [2025/03/25] - tenstrings&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="../../../../css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="../../../../css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="../../../../css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"more678.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"AkNKOtPwj7k90lMACLoaJ5ZK-gzGzoHsz","app_key":"e9kFad97QptN4ZXCtoS47NYc","server_url":"https://aknkotpw.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2020-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="../../../../js/utils.js" ></script>
+  <script  src="../../../../js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="../../../../index.html">
+      <strong>tenstrings&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../index.html" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('../../../../img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="NCTF 2024 Minecraft内存取证 [2025/03/25]"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        tenstrings
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-30 22:25" pubdate>
+          2025年6月30日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">NCTF 2024 Minecraft内存取证 [2025/03/25]</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>这次是一道Minecraft内存取证题目，先简单用R-Stdio看了一下，发现是在Linux上装的mcsm面板，使用Vol分析banner去制作符号表</p>
+<p><img src="../../../../img/archives/NCTF2024/image-20250322181447577.png" srcset="/img/loading.gif" lazyload alt="image-20250322181447577"></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs powershell">C:\Users\YY&gt;D:\Software\LovelyMem\Tools\python3\python.exe D:\Software\LovelyMem\Tools\volatility3\vol.py <span class="hljs-operator">-f</span> E:\BaiduNetdiskDownload\<span class="hljs-number">1</span>.mem banners.Banners<br>Volatility <span class="hljs-number">3</span> Framework <span class="hljs-number">2.8</span>.<span class="hljs-number">0</span><br>Progress:  <span class="hljs-number">100.00</span>               PDB scanning finished<br>Offset  Banner<br><br><span class="hljs-number">0</span>x213a001a0     Linux version <span class="hljs-number">5.4</span>.<span class="hljs-number">0</span><span class="hljs-literal">-205-generic</span> (buildd@lcy02<span class="hljs-literal">-amd64-055</span>) (gcc version <span class="hljs-number">9.4</span>.<span class="hljs-number">0</span> (Ubuntu <span class="hljs-number">9.4</span>.<span class="hljs-number">0</span><span class="hljs-literal">-1ubuntu1</span>~<span class="hljs-number">20.04</span>.<span class="hljs-number">2</span>)) <span class="hljs-comment">#225-Ubuntu SMP Fri Jan 10 22:23:35 UTC 2025 (Ubuntu 5.4.0-205.225-generic 5.4.284)</span><br><span class="hljs-number">0</span>x2155a0e54     Linux version <span class="hljs-number">5.4</span>.<span class="hljs-number">0</span><span class="hljs-literal">-205-generic</span> (buildd@lcy02<span class="hljs-literal">-amd64-055</span>) (gcc version <span class="hljs-number">9.4</span>.<span class="hljs-number">0</span> (Ubuntu <span class="hljs-number">9.4</span>.<span class="hljs-number">0</span><span class="hljs-literal">-1ubuntu1</span>~<span class="hljs-number">20.04</span>.<span class="hljs-number">2</span>)) <span class="hljs-comment">#225-Ubuntu SMP Fri Jan 10 22:23:35 UTC 2025 (Ubuntu 5.4.0-205.225-generic 5.4.284)</span><br><span class="hljs-number">0</span>x23fec9390     Linux version <span class="hljs-number">5.4</span>.<span class="hljs-number">0</span><span class="hljs-literal">-205-generic</span> (buildd@lcy02<span class="hljs-literal">-amd64-055</span>) (gcc version <span class="hljs-number">9.4</span>.<span class="hljs-number">0</span> (Ubuntu <span class="hljs-number">9.4</span>.<span class="hljs-number">0</span><span class="hljs-literal">-1ubuntu1</span>~<span class="hljs-number">20.04</span>.<span class="hljs-number">2</span>)) <span class="hljs-comment">#225-Ubuntu SMP Fri Jan 10 22:23:35 UTC 2025 (Ubuntu 5.4.0-205.225-generic 5.4.284)</span><br><br>C:\Users\YY&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Vol3制作过程，或直接使用<a target="_blank" rel="noopener" href="https://github.com/leludo84/vol3-linux-profiles">leludo84&#x2F;vol3-linux-profiles: Volatility3 Linux profiles (github.com)</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">wget https://github.com/volatilityfoundation/dwarf2json/releases/download/v0.9.0/dwarf2json-linux-amd64<br>docker pull ubuntu 20.04<br><span class="hljs-meta prompt_"># </span><span class="language-bash">https://launchpad.net/ubuntu/+<span class="hljs-built_in">source</span>/linux/5.4.0-208.228</span><br>wget https://launchpadlibrarian.net/769817990/linux-image-unsigned-5.4.0-205-generic-dbgsym_5.4.0-205.225_amd64.ddeb<br>docker run -it --rm -v $PWD:/volatility ubuntu:20.04 /bin/bash<br>cd volatility<br>dpkg -i linux-image-unsigned-5.4.0-205-generic-dbgsym_5.4.0-205.225_amd64.ddeb<br>./dwarf2json-linux-amd64 linux --elf /usr/lib/debug/boot/vmlinux-5.4.0-205-generic &gt; linu<br>x-image-5.4.0-205-generic.json<br>exit<br> cp linux-image-5.4.0-205-generic.json /mnt/d/Software/LovelyMem/Tools/volatility3/volatility3/framework/symbols/linux<br></code></pre></td></tr></table></figure>
+
+<p>vol2使用<a target="_blank" rel="noopener" href="https://github.com/CTF-Archives/profile-builder">CTF-Archives&#x2F;profile-builder: A demo for automatically build dwarf file for volatility2 (github.com)</a>进行制作（Ubuntu Debian）[需要Docker Desktop]</p>
+<p>参考</p>
+<p><a target="_blank" rel="noopener" href="http://www.s1mh0.cn/blog/index.php/2023/12/20/linux_ncqz/">http://www.s1mh0.cn/blog/index.php/2023/12/20/linux_ncqz/</a></p>
+<p><a target="_blank" rel="noopener" href="https://goodlunatic.github.io/posts/761da51/#%E5%88%B6%E4%BD%9C--profilevol2--%E7%9A%84%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B">Misc-Forensics - ⚡Lunatic BLOG⚡ (goodlunatic.github.io)</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">http://www.s1mh0.cn/blog/index.php/2023/12/20/linux_ncqz/</span><br>docker run -it --name lin_vol_make ubuntu:20.04 /bin/bash<br>apt update<br>apt install linux-image-5.4.0-205-generic linux-headers-5.4.0-205-generic -y<br>docker restart lin_vol_make<br>docker exec -it lin_vol_make /bin/bash<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-keyword">FROM</span> ubuntu:<span class="hljs-number">20.04</span><br><br><span class="hljs-keyword">ENV</span> TZ=Asia/Shanghai<br><span class="hljs-keyword">ENV</span> DEBIAN_FRONTEND=noninteractive<br><span class="hljs-keyword">ENV</span> UBUNTU_FRONTEND=noninteractive<br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> ./service/docker-entrypoint.sh /docker-entrypoint.sh</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> ./src/ /src/</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> sed -i <span class="hljs-string">&#x27;s/archive.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list \</span><br><span class="language-bash">    &amp;&amp; sed -i <span class="hljs-string">&#x27;s/security.ubuntu.com/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apt/sources.list \</span><br><span class="language-bash">	&amp;&amp; apt update --no-install-recommends\</span><br><span class="language-bash">    &amp;&amp; apt install -y openssh-server gcc-10 dwarfdump build-essential unzip wget\</span><br><span class="language-bash">    &amp;&amp; <span class="hljs-built_in">chmod</span> +x /docker-entrypoint.sh \</span><br><span class="language-bash">    &amp;&amp; <span class="hljs-built_in">mkdir</span> /app \</span><br><span class="language-bash">    &amp;&amp; sed -i <span class="hljs-string">&#x27;s/\#PermitRootLogin prohibit-password/PermitRootLogin yes/g&#x27;</span> /etc/ssh/sshd_config \</span><br><span class="language-bash">    &amp;&amp; sed -i <span class="hljs-string">&#x27;s/\#PasswordAuthentication yes/PasswordAuthentication yes/g&#x27;</span> /etc/ssh/sshd_config \</span><br><span class="language-bash">    &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;root:root&#x27;</span> | chpasswd \</span><br><span class="language-bash">    &amp;&amp; systemctl <span class="hljs-built_in">enable</span> ssh \</span><br><span class="language-bash">    &amp;&amp; service ssh start</span><br><br><br><span class="hljs-comment"># https://mirrors.ustc.edu.cn/ubuntu/pool/main/l/linux/</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> wget https://mirrors.ustc.edu.cn/ubuntu/pool/main/l/linux/linux-image-unsigned-5.4.0-205-generic_5.4.0-205.225_amd64.deb -P /src/ \</span><br><span class="language-bash">    &amp;&amp; wget https://mirrors.ustc.edu.cn/ubuntu/pool/main/l/linux/linux-headers-5.4.0-205-generic_5.4.0-205.225_amd64.deb -P /src/ \</span><br><span class="language-bash">    &amp;&amp; wget https://mirrors.ustc.edu.cn/ubuntu/pool/main/l/linux/linux-headers-5.4.0-205_5.4.0-205.225_all.deb -P /src/ \</span><br><span class="language-bash">    &amp;&amp; wget https://mirrors.ustc.edu.cn/ubuntu/pool/main/l/linux/linux-modules-5.4.0-205-generic_5.4.0-205.225_amd64.deb -P /src/</span><br><br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /src</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> unzip tool.zip &amp;&amp; apt-get update &amp;&amp; apt-get install -y kmod linux-base initramfs-tools</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> dpkg -i linux-headers-5.4.0-205_5.4.0-205.225_all.deb \</span><br><span class="language-bash">    &amp;&amp; dpkg -i linux-headers-5.4.0-205-generic_5.4.0-205.225_amd64.deb \</span><br><span class="language-bash">    &amp;&amp; dpkg -i linux-modules-5.4.0-205-generic_5.4.0-205.225_amd64.deb \</span><br><span class="language-bash">    &amp;&amp; dpkg -i linux-image-unsigned-5.4.0-205-generic_5.4.0-205.225_amd64.deb \</span><br><span class="language-bash">    &amp;&amp; apt --fix-broken install -y</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">ls</span> -la /lib/modules/5.4.0-205-generic/ \</span><br><span class="language-bash">    &amp;&amp; <span class="hljs-built_in">mkdir</span> -p /lib/modules/5.4.0-205-amd64/ \</span><br><span class="language-bash">    &amp;&amp; <span class="hljs-built_in">ln</span> -sf /usr/src/linux-headers-5.4.0-205-generic /lib/modules/5.4.0-205-amd64/build</span><br><br><br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /src/linux</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;MODULE_LICENSE(&quot;GPL&quot;);&#x27;</span> &gt;&gt; module.c &amp;&amp; \</span><br><span class="language-bash">    sed -i <span class="hljs-string">&#x27;s/$(shell uname -r)/5.4.0-205-generic/g&#x27;</span> Makefile &amp;&amp; \</span><br><span class="language-bash">    make &amp;&amp; \</span><br><span class="language-bash">    <span class="hljs-built_in">mv</span> module.dwarf /app &amp;&amp; \</span><br><span class="language-bash">    <span class="hljs-built_in">cp</span> /boot/System.map* /app</span><br><br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /app</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> zip ubuntu-5.4.0-205-generic.zip *</span><br><br><span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;/bin/bash&quot;</span>]</span><br><span class="hljs-comment"># docker run -it -p 7080:8000 profile:v1 bash</span><br><span class="hljs-comment"># cd /app</span><br><span class="hljs-comment"># python3 -m http.server</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 如果Profile无法读取，dwaft报错前往<a target="_blank" rel="noopener" href="https://www.prevanders.net/dwarf.html">https://www.prevanders.net/dwarf.html</a> 下载符号表<br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/14100">https://xz.aliyun.com/news/14100</a></li>
+<li><input checked="" disabled="" type="checkbox"> TIP: LovelyMem使用的Vol2不是最新版本，会报错<br><a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility/issues/638">https://github.com/volatilityfoundation/volatility/issues/638</a><br><a target="_blank" rel="noopener" href="https://github.com/volatilityfoundation/volatility/pull/854">https://github.com/volatilityfoundation/volatility/pull/854</a></li>
+</ul>
+<p>linux_find_file -L列出全部文件，保存到flie.txt</p>
+<p><img src="../../../../img/archives/NCTF2024/image-20250323042423481.png" srcset="/img/loading.gif" lazyload alt="image-20250323042423481"></p>
+<p>找到面板用户数据，直接提取</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">D:\Software\LovelyMem\Tools\python27\python27.exe D:\Software\LovelyMem\Tools\volatility<span class="hljs-literal">-master</span>\vol.py <span class="hljs-operator">-f</span> E:\BaiduNetdiskDownload\<span class="hljs-number">1</span>.mem <span class="hljs-literal">--profile</span>=Linuxubuntu<span class="hljs-literal">-5_4_0-205-genericx64</span> linux_find_file <span class="hljs-literal">-i</span> <span class="hljs-number">0</span>xffff9d4468415688 <span class="hljs-literal">-O</span> extracted_user_file.json<br></code></pre></td></tr></table></figure>
+
+<p><img src="../../../../img/archives/NCTF2024/image-20250323042438811.png" srcset="/img/loading.gif" lazyload alt="image-20250323042438811"></p>
+<p>然后使用hashcat爆破得到密码</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">.\hashcat.exe <span class="hljs-literal">-m</span> <span class="hljs-number">3200</span> <span class="hljs-literal">-a</span> <span class="hljs-number">0</span> hash.txt D:\Software\ONE<span class="hljs-literal">-FOX</span>集成工具箱_V8.<span class="hljs-number">2</span>公开版_by狐狸\gui_scan\tscanplus\config\CrackDict\rockyou.txt <span class="hljs-literal">--show</span><br><span class="hljs-variable">$2a</span><span class="hljs-variable">$10</span><span class="hljs-variable">$jtOn5mgMKwhjevsKPe</span>/ps.CIRJ1NoP/uAFWNZos7OF8vzKKGJrIxm:I0am0alone<br></code></pre></td></tr></table></figure>
+
+<p><img src="../../../../img/archives/NCTF2024/image-20250323110531511.png" srcset="/img/loading.gif" lazyload alt="image-20250323110531511"></p>
+<p>往下翻发现有backup和log，直接提取日志，并编写python代码批量提取backup文件，同时提取usercache.json来寻找uuid对应的用户名</p>
+<p>PS：提取的时候忘记是新建的窗口了，找半天在User里（</p>
+<p><img src="../../../../img/archives/NCTF2024/image-20250323111032841.png" srcset="/img/loading.gif" lazyload alt="image-20250323111032841"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> subprocess<br><br><span class="hljs-comment"># 内存镜像路径</span><br>mem_file = <span class="hljs-string">&quot;E:\\BaiduNetdiskDownload\\1.mem&quot;</span><br>profile = <span class="hljs-string">&quot;Linuxubuntu-5_4_0-205-genericx64&quot;</span><br>volatility_path = <span class="hljs-string">&quot;D:\\Software\\LovelyMem\\Tools\\volatility-master\\vol.py&quot;</span><br>python_path = <span class="hljs-string">&quot;D:\\Software\\LovelyMem\\Tools\\python27\\python27.exe&quot;</span><br>output_dir = <span class="hljs-string">&quot;.\\b\\&quot;</span><br><br><span class="hljs-comment"># 确保输出目录存在</span><br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(output_dir):<br>    os.makedirs(output_dir)<br><br><span class="hljs-comment"># 需要提取的备份文件列表（使用直接偏移量）</span><br>backup_files = [<br>    <span class="hljs-comment"># 格式: offset, 文件路径, 输出文件名</span><br>    (<span class="hljs-string">&quot;0xffff9d43832b5688&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_10-20-0.zip&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d43a8b0a328&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_10-10-0.zip&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d439a413000&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_10-0-0.zip&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d439a415ad0&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_9-50-0.zip&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d439a413448&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_9-40-0.zip&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d438314cdf8&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_9-30-0.zip&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d43a8b0abb8&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_9-20-0.zip&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d439a415f18&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_9-10-0.zip&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d43a8b0b890&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_9-0-0.zip&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d4467e8bcd8&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_8-50-0.zip&quot;</span>)<br>]<br><br><span class="hljs-keyword">for</span> offset, file_path <span class="hljs-keyword">in</span> backup_files:<br>    filename = os.path.basename(file_path)<br>    output_path = os.path.join(output_dir, filename)<br><br>    <span class="hljs-comment"># 使用volatility的linux_dump_map命令提取指定偏移量的数据</span><br>    cmd = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;python_path&#125;</span> <span class="hljs-subst">&#123;volatility_path&#125;</span> -f <span class="hljs-subst">&#123;mem_file&#125;</span> --profile=<span class="hljs-subst">&#123;profile&#125;</span> linux_find_file -i <span class="hljs-subst">&#123;offset&#125;</span> -O &quot;<span class="hljs-subst">&#123;output_path&#125;</span>&quot;&#x27;</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;执行: <span class="hljs-subst">&#123;cmd&#125;</span>&quot;</span>)<br><br>    <span class="hljs-keyword">try</span>:<br>        subprocess.call(cmd, shell=<span class="hljs-literal">True</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;已提取: <span class="hljs-subst">&#123;file_path&#125;</span> -&gt; <span class="hljs-subst">&#123;output_path&#125;</span>&quot;</span>)<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;提取失败: <span class="hljs-subst">&#123;file_path&#125;</span>，错误: <span class="hljs-subst">&#123;<span class="hljs-built_in">str</span>(e)&#125;</span>&quot;</span>)<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;-&quot;</span> * <span class="hljs-number">60</span>)<br><br><span class="hljs-comment"># 添加提取backups.json文件的代码</span><br>backups_json_file = <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/backups.json&quot;</span><br>cmd_find = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;python_path&#125;</span> <span class="hljs-subst">&#123;volatility_path&#125;</span> -f <span class="hljs-subst">&#123;mem_file&#125;</span> --profile=<span class="hljs-subst">&#123;profile&#125;</span> linux_find_file -F &quot;<span class="hljs-subst">&#123;backups_json_file&#125;</span>&quot;&#x27;</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;寻找backups.json: <span class="hljs-subst">&#123;cmd_find&#125;</span>&quot;</span>)<br><br><span class="hljs-keyword">try</span>:<br>    output = subprocess.check_output(cmd_find, shell=<span class="hljs-literal">True</span>).decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> output.splitlines():<br>        <span class="hljs-keyword">if</span> backups_json_file <span class="hljs-keyword">in</span> line:<br>            parts = line.split()<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(parts) &gt;= <span class="hljs-number">2</span>:<br>                inode = parts[<span class="hljs-number">0</span>]<br>                output_path = os.path.join(output_dir, <span class="hljs-string">&quot;backups.json&quot;</span>)<br>                cmd_extract = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;python_path&#125;</span> <span class="hljs-subst">&#123;volatility_path&#125;</span> -f <span class="hljs-subst">&#123;mem_file&#125;</span> --profile=<span class="hljs-subst">&#123;profile&#125;</span> linux_find_file -i <span class="hljs-subst">&#123;inode&#125;</span> -O &quot;<span class="hljs-subst">&#123;output_path&#125;</span>&quot;&#x27;</span><br>                subprocess.call(cmd_extract, shell=<span class="hljs-literal">True</span>)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;已提取: <span class="hljs-subst">&#123;backups_json_file&#125;</span> -&gt; <span class="hljs-subst">&#123;output_path&#125;</span>&quot;</span>)<br>                <span class="hljs-keyword">break</span><br><span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;提取失败: <span class="hljs-subst">&#123;<span class="hljs-built_in">str</span>(e)&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="../../../../img/archives/NCTF2024/image-20250323111944203.png" srcset="/img/loading.gif" lazyload alt="image-20250323111944203"></p>
+<p>usercache.json</p>
+<p><img src="../../../../img/archives/NCTF2024/image-20250323111452641.png" srcset="/img/loading.gif" lazyload alt="image-20250323111452641"></p>
+<p>分析日志可以得到Alex的房子的位置</p>
+<p><img src="../../../../img/archives/NCTF2024/image-20250323044726666.png" srcset="/img/loading.gif" lazyload alt="image-20250323044726666"></p>
+<p>从提取到的备份文件中分析stat，或重新提取stat文件，发现没有打火石使用记录，只找到了岩浆桶的，结合usercache判断出玩家名为Nathan</p>
+<p><img src="../../../../img/archives/NCTF2024/image-20250323111802977.png" srcset="/img/loading.gif" lazyload alt="image-20250323111802977"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> subprocess<br><br><span class="hljs-comment"># 内存镜像路径</span><br>mem_file = <span class="hljs-string">&quot;E:\\BaiduNetdiskDownload\\1.mem&quot;</span><br>profile = <span class="hljs-string">&quot;Linuxubuntu-5_4_0-205-genericx64&quot;</span><br>volatility_path = <span class="hljs-string">&quot;D:\\Software\\LovelyMem\\Tools\\volatility-master\\vol.py&quot;</span><br>python_path = <span class="hljs-string">&quot;D:\\Software\\LovelyMem\\Tools\\python27\\python27.exe&quot;</span><br>output_dir = <span class="hljs-string">&quot;.&quot;</span><br><br><span class="hljs-comment"># 确保输出目录存在</span><br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(output_dir):<br>    os.makedirs(output_dir)<br><br><span class="hljs-comment"># 文件路径和对应的偏移量(offset)</span><br>files_to_extract = [<br>    <span class="hljs-comment"># 服务器日志</span><br>    (<span class="hljs-string">&quot;0xffff9d4469d29a98&quot;</span>, <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceLog/e00336260129441a9b74844d485b2cd6.log&quot;</span>),<br><br>    <span class="hljs-comment"># 玩家统计数据</span><br>    (<span class="hljs-string">&quot;0xffff9d43832b3890&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/stats/c7515538-6442-3ead-8b80-f72841202097.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d43832b1650&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/stats/4181cef3-c452-32c8-a544-99ce83c3c2dd.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d43a8b08978&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/stats/f901a319-bc80-37bc-a06d-a93efa505645.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d43a8b0b000&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/stats/e90b13f2-6900-3898-8ca4-3dae1a530f4f.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d4467ea2bb8&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/stats/e5e2e6a5-49d8-3e0f-bedc-2fc9f1c76420.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d4467e8e7a8&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/stats/285ecaf7-4fd9-3a0b-9881-fb7f09541139.json&quot;</span>),<br><br>    <span class="hljs-comment"># 玩家成就数据</span><br>    (<span class="hljs-string">&quot;0xffff9d43832b3cd8&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/advancements/c7515538-6442-3ead-8b80-f72841202097.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d43832b5ad0&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/advancements/4181cef3-c452-32c8-a544-99ce83c3c2dd.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d43a8b09208&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/advancements/f901a319-bc80-37bc-a06d-a93efa505645.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d43a8b0c568&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/advancements/e90b13f2-6900-3898-8ca4-3dae1a530f4f.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d4467ea0dc0&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/advancements/e5e2e6a5-49d8-3e0f-bedc-2fc9f1c76420.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d4467e8b448&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/world/advancements/285ecaf7-4fd9-3a0b-9881-fb7f09541139.json&quot;</span>),<br><br>    <span class="hljs-comment"># 关键备份文件</span><br>    (<span class="hljs-string">&quot;0xffff9d43a8b0b890&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_9-0-0.zip&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d4467e8bcd8&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/backups/2025-2-14_8-50-0.zip&quot;</span>),<br><br>    <span class="hljs-comment"># 玩家记录文件</span><br>    (<span class="hljs-string">&quot;0xffff9d4467e5c9b0&quot;</span>, <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/whitelist.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d4467e5f480&quot;</span>, <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/ops.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d4467e580e8&quot;</span>, <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/banned-ips.json&quot;</span>),<br>    (<span class="hljs-string">&quot;0xffff9d4467e5d240&quot;</span>,<br>     <span class="hljs-string">&quot;/opt/mcsmanager/daemon/data/InstanceData/e00336260129441a9b74844d485b2cd6/banned-players.json&quot;</span>)<br>]<br><br><span class="hljs-keyword">for</span> offset, file_path <span class="hljs-keyword">in</span> files_to_extract:<br>    <span class="hljs-comment"># 创建输出文件路径</span><br>    filename = os.path.basename(file_path)<br>    dir_name = os.path.dirname(file_path).split(<span class="hljs-string">&#x27;/&#x27;</span>)[-<span class="hljs-number">1</span>]  <span class="hljs-comment"># 获取上级目录名</span><br>    output_filename = <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;dir_name&#125;</span>_<span class="hljs-subst">&#123;filename&#125;</span>&quot;</span> <span class="hljs-keyword">if</span> dir_name <span class="hljs-keyword">else</span> filename<br>    output_path = os.path.join(output_dir, output_filename)<br><br>    <span class="hljs-comment"># 直接使用偏移量提取文件</span><br>    cmd_extract = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;python_path&#125;</span> <span class="hljs-subst">&#123;volatility_path&#125;</span> -f <span class="hljs-subst">&#123;mem_file&#125;</span> --profile=<span class="hljs-subst">&#123;profile&#125;</span> linux_find_file -O &quot;<span class="hljs-subst">&#123;output_path&#125;</span>&quot; -i <span class="hljs-subst">&#123;offset&#125;</span>&#x27;</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;提取: <span class="hljs-subst">&#123;cmd_extract&#125;</span>&quot;</span>)<br><br>    <span class="hljs-keyword">try</span>:<br>        subprocess.call(cmd_extract, shell=<span class="hljs-literal">True</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;已提取: <span class="hljs-subst">&#123;file_path&#125;</span> -&gt; <span class="hljs-subst">&#123;output_path&#125;</span>&quot;</span>)<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;提取失败: <span class="hljs-subst">&#123;file_path&#125;</span>, 错误: <span class="hljs-subst">&#123;<span class="hljs-built_in">str</span>(e)&#125;</span>&quot;</span>)<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;-&quot;</span> * <span class="hljs-number">60</span>)<br></code></pre></td></tr></table></figure>
+
+<p>使用MCA对存档进行分析，发现在9:20-9:40直接，坐标-405_63_132的位置多了一块岩浆</p>
+<p>进入存档确定过位置后确定了坐标</p>
+<p><img src="../../../../img/archives/NCTF2024/image-20250323112859702.png" srcset="/img/loading.gif" lazyload alt="image-20250323112859702"></p>
+<p><img src="../../../../img/archives/NCTF2024/image-20250323113033934.png" srcset="/img/loading.gif" lazyload alt="image-20250323113033934"></p>
+<p>将找到的内容拼接，得到flag</p>
+<p>nctf{I0am0alone_Nathan_-405_63_132}</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="../../../../tags/CTF/" class="print-no-link">#CTF</a>
+      
+        <a href="../../../../tags/Misc/" class="print-no-link">#Misc</a>
+      
+        <a href="../../../../tags/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/" class="print-no-link">#内存取证</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>NCTF 2024 Minecraft内存取证 [2025/03/25]</div>
+      <div>https://more678.github.io/2025/06/30/NCTF 2024 MC取证/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tenstrings</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="../wsl%20%E5%AE%89%E8%A3%85cuda%2012.2/" title="wsl install cuda 12.2 [2025/03/12]">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">wsl install cuda 12.2 [2025/03/12]</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="../../../02/19/QHCTF2025F/" title="QHCTF 2025 取证">
+                        <span class="hidden-mobile">QHCTF 2025 取证</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="../../../../js/events.js" ></script>
+<script  src="../../../../js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="../../../../js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="../../../../js/leancloud.js" ></script>
+
+  <script  src="../../../../js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="../../../../js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
