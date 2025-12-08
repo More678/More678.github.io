@@ -1,0 +1,131 @@
+
+(org.gnome.Nautilus:3210): libunity-CRITICAL **: 22:58:03.871: file unity-launcher.c: line 1638: unexpected error: Failed to execute child process “dbus-launch” (No such file or directory) (g-exec-error-quark, 8)
+
+(org.gnome.Nautilus:3210): libunity-CRITICAL **: 22:58:03.871: unity_launcher_entry_dbus_impl_construct: assertion 'conn != NULL' failed
+
+(org.gnome.Nautilus:3210): libunity-CRITICAL **: 22:58:03.873: unity-inspector.vala:96: Unable to connect to session bus: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(org.gnome.Nautilus:3210): dconf-WARNING **: 22:58:03.924: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(org.gnome.Nautilus:3210): dconf-WARNING **: 22:58:03.924: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+** (org.gnome.Nautilus:3210): WARNING **: 22:58:03.948: Unable to get contents of the bookmarks file: Error opening file /root/.gtk-bookmarks: No such file or directory
+
+** (org.gnome.Nautilus:3210): WARNING **: 22:58:03.948: Unable to get contents of the bookmarks file: Error opening file /root/.gtk-bookmarks: No such file or directory
+
+** (org.gnome.Nautilus:3210): CRITICAL **: 22:58:03.959: update_dbus_opened_locations: assertion 'dbus_object_path' failed
+
+(org.gnome.Nautilus:3210): dconf-WARNING **: 22:58:03.959: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+Nautilus-Share-Message: 22:58:03.985: Called "net usershare info" but it failed: Failed to execute child process “net” (No such file or directory)
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:58:05.792: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:58:05.792: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+** (org.gnome.Nautilus:3210): CRITICAL **: 22:58:06.050: update_dbus_opened_locations: assertion 'dbus_object_path' failed
+
+(org.gnome.Nautilus:3210): dconf-WARNING **: 22:58:06.051: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:58:12.921: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:58:12.921: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:58:12.928: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:58:12.928: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+(gedit:3244): dconf-WARNING **: 22:58:14.477: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(gedit:3244): dconf-WARNING **: 22:58:14.480: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(gedit:3244): dconf-WARNING **: 22:58:14.599: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(gedit:3244): dconf-WARNING **: 22:58:14.599: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(gedit:3244): dconf-WARNING **: 22:58:14.599: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:58:15.217: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:58:15.217: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+(gedit:3327): dconf-WARNING **: 22:58:15.517: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(gedit:3327): dconf-WARNING **: 22:58:15.522: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(gedit:3327): dconf-WARNING **: 22:58:15.595: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(gedit:3327): dconf-WARNING **: 22:58:15.596: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(gedit:3327): dconf-WARNING **: 22:58:15.596: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:58:39.575: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:58:39.575: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+** (gedit:3244): WARNING **: 22:59:32.161: Set document metadata failed: Setting attribute metadata::gedit-spell-language not supported
+
+** (gedit:3244): WARNING **: 22:59:32.163: Set document metadata failed: Setting attribute metadata::gedit-encoding not supported
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:59:32.319: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:59:32.319: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+** (gedit:3244): WARNING **: 22:59:54.803: Set document metadata failed: Setting attribute metadata::gedit-spell-language not supported
+
+** (gedit:3244): WARNING **: 22:59:54.804: Set document metadata failed: Setting attribute metadata::gedit-encoding not supported
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:59:54.944: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 22:59:54.944: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+(gedit:3244): dconf-WARNING **: 23:00:33.239: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(gedit:3244): dconf-WARNING **: 23:00:33.240: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+** (gedit:3244): WARNING **: 23:00:35.173: Set document metadata failed: Setting attribute metadata::gedit-spell-language not supported
+
+** (gedit:3244): WARNING **: 23:00:35.175: Set document metadata failed: Setting attribute metadata::gedit-encoding not supported
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:35.316: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:35.316: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+** (gedit:3244): WARNING **: 23:00:37.829: Set document metadata failed: Setting attribute metadata::gedit-position not supported
+
+(gedit:3244): dconf-WARNING **: 23:00:37.845: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+** (org.gnome.Nautilus:3210): CRITICAL **: 23:00:38.908: update_dbus_opened_locations: assertion 'dbus_object_path' failed
+
+(org.gnome.Nautilus:3210): dconf-WARNING **: 23:00:38.908: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:39.050: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:39.051: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:40.160: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:40.161: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+** (org.gnome.Nautilus:3210): CRITICAL **: 23:00:40.416: update_dbus_opened_locations: assertion 'dbus_object_path' failed
+
+(org.gnome.Nautilus:3210): dconf-WARNING **: 23:00:40.416: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:42.625: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:42.626: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+** (org.gnome.Nautilus:3210): CRITICAL **: 23:00:42.863: update_dbus_opened_locations: assertion 'dbus_object_path' failed
+
+(org.gnome.Nautilus:3210): dconf-WARNING **: 23:00:42.863: failed to commit changes to dconf: Failed to execute child process “dbus-launch” (No such file or directory)
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:44.681: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:44.681: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:44.698: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:44.698: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:48.150: g_dbus_proxy_new_sync: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+
+(org.gnome.Nautilus:3210): GLib-GIO-CRITICAL **: 23:00:48.150: g_dbus_proxy_get_cached_property: assertion 'G_IS_DBUS_PROXY (proxy)' failed

